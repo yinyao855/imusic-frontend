@@ -121,7 +121,7 @@
           </div>
           <!--全屏播放器-->
           <div class="tooltip my-auto" data-tip="全屏显示">
-            <button class="btn glass btn-sm">
+            <button class="btn glass btn-sm" @click="fullsize">
               <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22 42H6V26" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M26 6H42V22" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
@@ -138,7 +138,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps, watch } from 'vue';
+import { defineProps, watch, defineEmits } from 'vue';
 
 const props = defineProps({
   cover: String,
@@ -146,6 +146,8 @@ const props = defineProps({
   name: String,
   singer: String,
 });
+
+const emit = defineEmits(['fullsize']);
 
 const isPlaying = ref(false);
 const source = ref(props.source);
@@ -201,6 +203,11 @@ function minimizePlayer() {
 
 function expandPlayer() {
   isMinimized.value = false;
+}
+
+//全屏显示
+function fullsize() {
+  emit('fullsize');
 }
 </script>
 
