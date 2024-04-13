@@ -1,5 +1,5 @@
 <template>
-  <div :class="gradientClass" style="display: grid; height:100%; grid-template-columns: 1fr 1fr;">
+  <div class="outcontainer" :style="sty">
     <div class="col1">
       <div class="button_div">
         <buttonchangesize style="display: block" @fullsize="changesize"></buttonchangesize>
@@ -154,10 +154,8 @@ const props=defineProps({
   singer:String,
   name:String,
   lyrics:Array,
-  color1:String,
-  color2:String,
+  sty:String,
 })
-const gradientClass = `bg-gradient-to-r from-blue-500 to-green-500`;
 
 const isPlaying = ref(false);
 const durationtime = ref('0:00');
@@ -306,6 +304,12 @@ function displayLyrics(lyrics, currentTime) {
 
 <style scoped>
 @import url('../css/Music_Play.css');
+
+.outcontainer {
+    display: grid;
+    height:100%;
+    grid-template-columns: 1fr 1fr;
+}
 
 .content {
   transform-origin: center center;
