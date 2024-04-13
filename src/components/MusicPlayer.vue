@@ -27,7 +27,7 @@
           <div class="flex h-2/3 justify-around w-1/2 mx-auto">
             <!--播放上一首-->
             <div class="tooltip my-auto" data-tip="上一首">
-              <button class="btn glass btn-sm">
+              <button class="btn glass btn-sm" @click="goback">
                 <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M34 36L22 24L34 12" stroke="#333" stroke-width="4" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -49,7 +49,7 @@
             </div>
             <!--播放下一首-->
             <div class="tooltip my-auto" data-tip="下一首">
-              <button class="btn glass btn-sm">
+              <button class="btn glass btn-sm" @click="gonext">
                 <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M14 12L26 24L14 36" stroke="#333" stroke-width="4" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -147,7 +147,11 @@ const props = defineProps({
   singer: String,
 });
 
-const emit = defineEmits(['fullsize']);
+const emit = defineEmits([
+  'fullsize',
+  'back',
+  'next'
+]);
 
 const isPlaying = ref(false);
 const source = ref(props.source);
@@ -168,6 +172,18 @@ const volume = ref(40);
 //改变音量
 const changeVolume = () =>{
   audioPlayer.value.volume = volume.value / 100;
+}
+
+//播放上一首
+const goback = () => {
+  emit('back');
+  console.log('back');
+}
+
+//播放下一首
+const gonext = () => {
+  emit('next');
+  console.log('next');
 }
 
 console.log(source.value);
