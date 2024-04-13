@@ -318,7 +318,7 @@ function displayLyrics(lyrics, currentTime) {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   font-weight: bolder;
   font-size: 250%;
   line-height: 2;
@@ -329,7 +329,7 @@ function displayLyrics(lyrics, currentTime) {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
   line-height: 2.5;
   font-size: 170%;
   text-align: center;

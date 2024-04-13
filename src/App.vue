@@ -100,6 +100,7 @@ function backSong(){
   index = (index - 1 + length) % length;
   currentMusic.value = musicList[index];
   lrcContent.value = lyrics[index];
+  lyricsx.value=parseLRC(lrcContent.value);
 }
 </script>
 
