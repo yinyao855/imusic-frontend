@@ -148,6 +148,13 @@ const changesize =()=>{
   emit('fullsize');
 }
 
+const props=defineProps({
+  cover:String,
+  source:String,
+  singer:String,
+  name:String,
+  lrcContent:String,
+})
 const selectedFile = ref(null);
 const audioSrc = ref('');
 const isPlaying = ref(false);
@@ -193,7 +200,8 @@ const lrcContent = `
 [03:10.63]更多恋爱故事动人
 [03:13.13]划上了丝丝美感
 `;
-const lyrics = parseLRC(lrcContent);
+const lyrics=ref(Array);
+lyrics = parseLRC(lrcContent);
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
   special: false
