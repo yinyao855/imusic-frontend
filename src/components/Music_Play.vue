@@ -1,5 +1,5 @@
 <template>
-  <div class="outcontainer">
+  <div class="outcontainer bg-gradient-to-r from-blue-500 to-green-500">
     <div class="col1">
       <div class="button_div">
         <buttonchangesize style="display: block" @fullsize="changesize"></buttonchangesize>
