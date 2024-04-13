@@ -112,7 +112,8 @@ function backSong(){
   @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
   <!-- <MusicPlayer source="./天下-张杰.128.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
   <Music_Play v-if="isfull" class="fixed top-0 left-0 w-full" @fullsize="changesize" :source="currentMusic.source"
-  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"></Music_Play>
+  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"
+  :sty="gradient[0]"></Music_Play>
 </template>
 
 <style>
