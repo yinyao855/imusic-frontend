@@ -57,7 +57,7 @@
             </svg> -->
             <img :src="props.cover" class="content stop rounded-full w-[243px] h-[243px]">
           </div>
-          <div class="card__title">{{ props.name }}</div>
+          <div class="card__title" style="font-weight: bolder !important;">{{ props.name }}</div>
           <div class="card__subtitle">{{ props.singer }}</div>
           <div class="card__wrapper">
             <div class="card__time card__time-passed">{{ currenttime }}</div>
