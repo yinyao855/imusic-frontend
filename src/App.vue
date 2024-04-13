@@ -14,7 +14,7 @@ function changesize(){
 </script>
 
 <template>
-  <!-- <Upload></Upload> -->
+  <Upload></Upload>
   <!-- <Test></Test> -->
   <!-- <Progress></Progress> -->
   <MusicPlayer v-if="!isfull" source="./难得有情人.mp3" name="难得有情人" singer="关淑怡" cover="./cover.png" @fullsize="changesize"></MusicPlayer>
