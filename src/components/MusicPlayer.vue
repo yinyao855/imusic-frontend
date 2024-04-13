@@ -37,7 +37,8 @@
             </div>
             <div class="tooltip my-auto" data-tip="播放与暂停">
               <button class="btn glass" @click="togglePlay">
-                <svg v-if="!isPlaying" width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg v-if="!isPlaying" width="40" height="40" viewBox="0 0 48 48" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
                   <path d="M15 24V11.8756L25.5 17.9378L36 24L25.5 30.0622L15 36.1244V24Z" fill="#333" stroke="#333"
                     stroke-width="4" stroke-linejoin="round" />
                 </svg>
@@ -84,13 +85,35 @@
             </button>
           </div>
           <!--控制播放方式-->
-          <div class="tooltip my-auto" data-tip="播放方式">
-            <button class="btn glass btn-sm">
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div class="tooltip my-auto" :data-tip="playerModeText">
+            <button class="btn glass btn-sm" @click="changeMode">
+              <svg v-if="playerMode === 0" width="24" height="24" viewBox="0 0 48 48" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M43.8233 25.2305C43.7019 25.9889 43.5195 26.727 43.2814 27.4395C42.763 28.9914 41.9801 30.4222 40.9863 31.6785C38.4222 34.9201 34.454 37 30 37H16C9.39697 37 4 31.6785 4 25C4 18.3502 9.39624 13 16 13H44"
                   stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <svg v-if="playerMode === 1" width="24" height="24" viewBox="0 0 48 48" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M43.8233 25.2305C43.7019 25.9889 43.5195 26.727 43.2814 27.4395C42.763 28.9914 41.9801 30.4222 40.9863 31.6785C38.4222 34.9201 34.454 37 30 37H16C9.39697 37 4 31.6785 4 25C4 18.3502 9.39624 13 16 13H44"
+                  stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M24 19V31" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M24 19L21 22L19.5 23.5" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <svg v-if="playerMode === 2" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 25C4 18.3502 9.39624 13 16 13H44" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M44 23C44 29.6498 38.6038 35 32 35H4" stroke="#333" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M10 41L4 35L10 29" stroke="#333" stroke-width="4" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
             </button>
@@ -106,7 +129,8 @@
                 <path d="M14 11.9998V35.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
               </svg>
             </button>
-            <input type="range" min="0" max="100" value="40" class="range range-xs my-auto" v-model="volume" @input="changeVolume" />
+            <input type="range" min="0" max="100" value="40" class="range range-xs my-auto" v-model="volume"
+              @input="changeVolume" />
           </div>
           <!--缩小播放器-->
           <div class="tooltip my-auto" data-tip="最小化">
@@ -138,7 +162,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps, watch} from 'vue';
+import { defineProps, watch } from 'vue';
 
 const props = defineProps({
   cover: String,
@@ -152,23 +176,27 @@ const emit = defineEmits([
   'back',
   'next'
 ]);
-
+//是否正在播放
 const isPlaying = ref(false);
-
+//当前播放时间和总时间
 const currentTime = ref('0:00');
 const duration = ref('0:00');
-
+//当前播放时间和总时间（秒）
 const durationInSeconds = ref(0);
 const currentTimeInSeconds = ref(0);
-
+//音频播放器对象
 const audioPlayer = ref(null);
-
+//定义播放模式, 0为列表循环，1为单曲循环，2为随机播放
+const playerMode = ref(0);
+const playerModeText = ref('列表循环');
+const modeList = ['列表循环', '单曲循环', '随机播放'];
+//是否最小化
 const isMinimized = ref(false);
-
+//音量
 const volume = ref(40);
 
 //改变音量
-const changeVolume = () =>{
+const changeVolume = () => {
   audioPlayer.value.volume = volume.value / 100;
 }
 
@@ -184,6 +212,13 @@ const gonext = () => {
   emit('next');
   isPlaying.value = true;
   console.log('next');
+}
+
+//改变播放模式
+const changeMode = () => {
+  playerMode.value = (playerMode.value + 1) % 3;
+  playerModeText.value = modeList[playerMode.value];
+  console.log(playerMode.value);
 }
 
 console.log(props.source);
