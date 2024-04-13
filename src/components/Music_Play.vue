@@ -14,7 +14,7 @@
             </svg>
           </button> -->
           <div class="card__img">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="content stop">
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="content stop">
               <circle r="60" fill="#ffd8c9" cy="64" cx="64"></circle>
               <circle r="48" opacity=".3" fill="#fff" cy="64" cx="64"></circle>
               <path fill="#393c54"
@@ -54,7 +54,8 @@
                 <path stroke-miterlimit="10" stroke="#f85565"
                       d="m57.25 78.76a17.4 17.4 0 0 0 6.75 1.12 17.4 17.4 0 0 0 6.75-1.12"></path>
               </g>
-            </svg>
+            </svg> -->
+            <img :src="props.cover" class="content stop rounded-full w-[243px] h-[243px]">
           </div>
           <div class="card__title">{{ props.name }}</div>
           <div class="card__subtitle">{{ props.singer }}</div>
@@ -152,7 +153,7 @@ const props=defineProps({
   source:String,
   singer:String,
   name:String,
-  lrcContent:String,
+  lyrics:Array,
 })
 // const selectedFile = ref(null);
 // const audioSrc = ref('');
@@ -199,8 +200,6 @@ const maxlength = ref(100);
 // [03:10.63]更多恋爱故事动人
 // [03:13.13]划上了丝丝美感
 // `;
-const lyrics=ref(Array);
-lyrics.value = parseLRC(props.lrcContent);
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
   special: false
@@ -262,7 +261,7 @@ const getCurrentTime = () => {
   const second = Math.floor(currentTime % 60);
   currenttime.value = `${minute}:${second < 10 ? '0' : ''}${second}`;
   currentduration.value = minute * 60 + second;
-  displayLyrics(lyrics, currentduration.value);
+  displayLyrics(props.lyrics, currentduration.value);
 };
 
 const getDuration = () => {
@@ -283,24 +282,24 @@ onBeforeUnmount(() => {
   audioPlayer.value.removeEventListener('timeupdate', getCurrentTime);
 });
 
-function parseLRC(lrc) {
-  const lines = lrc.split('\n');
-  const lyrics = [];
-  const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\](.*)/;
+// function parseLRC(lrc) {
+//   const lines = lrc.split('\n');
+//   const lyrics = [];
+//   const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\](.*)/;
 
-  lines.forEach(line => {
-    const match = timeRegex.exec(line);
-    if (match) {
-      const minute = parseInt(match[1]);
-      const second = parseInt(match[2]);
-      const millisecond = parseInt(match[3]);
-      const timestamp = minute * 60 + second + millisecond / 1000;
-      const text = match[4].trim();
-      lyrics.push({timestamp, text});
-    }
-  });
-  return lyrics;
-}
+//   lines.forEach(line => {
+//     const match = timeRegex.exec(line);
+//     if (match) {
+//       const minute = parseInt(match[1]);
+//       const second = parseInt(match[2]);
+//       const millisecond = parseInt(match[3]);
+//       const timestamp = minute * 60 + second + millisecond / 1000;
+//       const text = match[4].trim();
+//       lyrics.push({timestamp, text});
+//     }
+//   });
+//   return lyrics;
+// }
 
 function displayLyrics(lyrics, currentTime) {
   console.log(currentTime)
@@ -337,11 +336,6 @@ function displayLyrics(lyrics, currentTime) {
   }
 }
 
-watch(() => props.lrcContent, (newValue) => {
-  console.log('lrcContent 变化了，新值为:', newValue);
-  lyrics.value=parseLRC(props.lrcContent);
-});
-
 </script>
 
 
@@ -350,11 +344,11 @@ watch(() => props.lrcContent, (newValue) => {
 
 .content {
   transform-origin: center center;
-  animation: rotate 4s linear infinite;
+  animation: rotate 10s linear infinite;
 }
 
 .content.rotate {
-  animation: rotate 4s linear infinite; /* 启动动画 */
+  animation: rotate 10s linear infinite; /* 启动动画 */
 }
 
 .content.stop {

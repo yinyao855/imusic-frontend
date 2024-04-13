@@ -50,6 +50,9 @@ const musicList = [
 import lyrics from './js/lyrics';
 let lrcContent = ref(lyrics[0]);
 
+const lyricsx=ref(Array);
+lyricsx.value=parseLRC(lyrics[0]);
+console.log(lyricsx.value);
 //当前播放歌曲
 const currentMusic = ref(musicList[0]);
 let index = 0;
@@ -60,7 +63,29 @@ function nextSong(){
   index = (index + 1) % length;
   currentMusic.value = musicList[index];
   lrcContent.value = lyrics[index];
+  lyricsx.value=parseLRC(lrcContent.value);
+  console.log(lyricsx.value);
 }
+
+function parseLRC(lrc) {
+  const lines = lrc.split('\n');
+  const lyrics = [];
+  const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\](.*)/;
+
+  lines.forEach(line => {
+    const match = timeRegex.exec(line);
+    if (match) {
+      const minute = parseInt(match[1]);
+      const second = parseInt(match[2]);
+      const millisecond = parseInt(match[3]);
+      const timestamp = minute * 60 + second + millisecond / 1000;
+      const text = match[4].trim();
+      lyrics.push({timestamp, text});
+    }
+  });
+  return lyrics;
+}
+
 
 //上一首
 function backSong(){
@@ -80,7 +105,7 @@ function backSong(){
   @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
   <!-- <MusicPlayer source="./天下-张杰.128.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
   <Music_Play v-if="isfull" class="fixed top-0 left-0 w-full" @fullsize="changesize" :source="currentMusic.source"
-  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lrcContent="lrcContent"></Music_Play>
+  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"></Music_Play>
 </template>
 
 <style>
