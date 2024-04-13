@@ -140,7 +140,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, onBeforeUnmount} from 'vue';
+import {ref, onMounted, onBeforeUnmount ,watch} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
 const emit = defineEmits(['fullsize']);
@@ -209,7 +209,6 @@ const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, 
   special: false
 }, {text: '', special: false}, {text: '', special: false}]);
 const text = ref('未播放');
-console.log(lyrics);
 const nowline = ref(0);
 
 
@@ -337,6 +336,11 @@ function displayLyrics(lyrics, currentTime) {
     }
   }
 }
+
+watch(() => props.lrcContent, (newValue) => {
+  console.log('lrcContent 变化了，新值为:', newValue);
+  lyrics.value=parseLRC(props.lrcContent);
+});
 
 </script>
 
