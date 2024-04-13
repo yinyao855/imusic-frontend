@@ -1,6 +1,6 @@
 <template>
   <!-- 音乐播放 -->
-  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
+  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls autoplay></audio>
 
   <!-- 缩小后的音乐播放器 -->
   <Transition name="player-transition">
@@ -175,12 +175,14 @@ const changeVolume = () =>{
 //播放上一首
 const goback = () => {
   emit('back');
+  isPlaying.value = true;
   console.log('back');
 }
 
 //播放下一首
 const gonext = () => {
   emit('next');
+  isPlaying.value = true;
   console.log('next');
 }
 
