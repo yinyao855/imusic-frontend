@@ -47,21 +47,15 @@ let index = 0;
 //下一首
 function nextSong(){
   const length = musicList.length;
-  console.log(length);
   index = (index + 1) % length;
   currentMusic.value = musicList[index];
-  console.log(currentMusic.value);
 }
 
 //上一首
 function backSong(){
-  const index = musicList.indexOf(currentMusic.value);
-  if(index === 0){
-    currentMusic.value = musicList[musicList.length - 1];
-  }else{
-    currentMusic.value = musicList[index - 1];
-  }
-  console.log(currentMusic.value);
+  const length = musicList.length;
+  index = (index - 1 + length) % length;
+  currentMusic.value = musicList[index];
 }
 </script>
 

@@ -1,12 +1,12 @@
 <template>
   <!-- 音乐播放 -->
-  <audio :src="source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
+  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
 
   <!-- 缩小后的音乐播放器 -->
   <Transition name="player-transition">
     <div v-if="isMinimized" class="fixed bottom-6 left-6 w-32 h-32 rounded-full bg-red-100 animate-spin1"
       @click="expandPlayer">
-      <img :src="cover" alt="Album Art" class="h-32 w-32 rounded-full">
+      <img :src="props.cover" alt="Album Art" class="h-32 w-32 rounded-full">
     </div>
   </Transition>
 
@@ -15,12 +15,12 @@
       <div class="music-player-container h-28 mx-3 my-2 bg-slate-50 rounded-md shadow-lg flex bg-opacity-100">
         <!-- 专辑封面 -->
         <div class="rounded h-24 w-24 my-auto ml-4">
-          <img :src="cover" alt="Album Art" class="h-24 w-24 rounded">
+          <img :src="props.cover" alt="Album Art" class="h-24 w-24 rounded">
         </div>
         <!-- 歌曲信息 -->
         <div class="flex flex-col ml-4 my-auto">
-          <span class="text-lg font-semibold">{{ name }}</span>
-          <span class="text-sm font-light">{{ singer }}</span>
+          <span class="text-lg font-semibold">{{ props.name }}</span>
+          <span class="text-sm font-light">{{ props.singer }}</span>
         </div>
         <!-- 播放控制 -->
         <div class="flex flex-col ml-auto my-auto mr-4 w-1/2 h-4/5">
@@ -154,9 +154,7 @@ const emit = defineEmits([
 ]);
 
 const isPlaying = ref(false);
-const source = ref(props.source);
-const name = ref(props.name);
-const singer = ref(props.singer);
+
 const currentTime = ref('0:00');
 const duration = ref('0:00');
 
@@ -186,7 +184,7 @@ const gonext = () => {
   console.log('next');
 }
 
-console.log(source.value);
+console.log(props.source);
 
 const togglePlay = () => {
   if (isPlaying.value) {
