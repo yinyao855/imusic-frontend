@@ -69,10 +69,8 @@ function backSong(){
   <Upload></Upload>
   <!-- <Test></Test> -->
   <!-- <Progress></Progress> -->
-  <MusicPlayer v-if="!isfull" :source="currentMusic.source" :name="currentMusic.name" :singer="currentMusic.singer" 
-  :cover="currentMusic.cover" @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
-  <!-- <MusicPlayer source="./天下.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
-  <!-- <MusicPlayer source="./喜帖街.mp3" name="喜帖街" singer="谢安琪" cover="./喜帖街.webp"></MusicPlayer> -->
+  <MusicPlayer v-if="!isfull" source="./难得有情人.mp3" name="难得有情人" singer="关淑怡" cover="./cover.png" @fullsize="changesize"></MusicPlayer>
+  <!-- <MusicPlayer source="./天下-张杰.128.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
   <Music_Play v-if="isfull" class="fixed top-0 left-0 w-full" ></Music_Play>
 </template>
 
