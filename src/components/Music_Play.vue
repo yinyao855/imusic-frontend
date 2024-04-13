@@ -6,8 +6,8 @@
       </div>
       <div class="card">
         <label for="uploadx">
-          <input type="file" @change="handleFileChange" id="uploadx"
-                 style="opacity: 0; position: absolute; left: -9999px;">
+          <!-- <input type="file" @change="handleFileChange" id="uploadx"
+                 style="opacity: 0; position: absolute; left: -9999px;"> -->
           <!-- <button class="card__btn card__btn-menu">
             <svg fill="none" height="18" viewBox="0 0 24 18" width="24" xmlns="http://www.w3.org/2000/svg">
               <path d="m0 0h24v3h-12-12zm0 7.5h24v3h-24zm0 7.5h24v3h-24z" fill="#fff"></path>
@@ -154,8 +154,8 @@ const props=defineProps({
   name:String,
   lrcContent:String,
 })
-const selectedFile = ref(null);
-const audioSrc = ref('');
+// const selectedFile = ref(null);
+// const audioSrc = ref('');
 const isPlaying = ref(false);
 const durationtime = ref('0:00');
 const currenttime = ref('0:00');
@@ -200,7 +200,7 @@ const maxlength = ref(100);
 // [03:13.13]划上了丝丝美感
 // `;
 const lyrics=ref(Array);
-lyrics = parseLRC(props.lrcContent);
+lyrics.value = parseLRC(props.lrcContent);
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
   special: false
@@ -219,11 +219,12 @@ const handleChange = () => {
   }
 };
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  selectedFile.value = file;
-  audioSrc.value = URL.createObjectURL(file);
-};
+
+// const handleFileChange = (event) => {
+//   const file = event.target.files[0];
+//   selectedFile.value = file;
+//   audioSrc.value = URL.createObjectURL(file);
+// };
 
 const playAudio = () => {
   isPlaying.value = true;
