@@ -219,5 +219,19 @@ const lyrics = [
 `
 ]
 
+//渐变色
+const gradient = [
+`
+background: rgb(22,51,29);
+background: linear-gradient(178deg, rgba(22,51,29,1) 0%, rgba(213,236,228,1) 100%);
+`,
+
+`
+background: rgb(240,2,5);
+background: linear-gradient(11deg, rgba(240,2,5,1) 0%, rgba(7,9,10,1) 37%, rgba(112,3,15,1) 91%, rgba(8,10,11,1) 100%);
+`
+]
+
 // Path: src/js/lyrics.js
 export default lyrics;
+export { gradient };

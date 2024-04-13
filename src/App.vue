@@ -27,24 +27,24 @@ const musicList = [
     singer: '张杰',
     cover: './天下.webp',
     source: './天下.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    color1: '#101010',
+    color2: '#070707'
   },
   {
     name: '喜帖街',
     singer: '谢安琪',
     cover: './喜帖街.webp',
     source: './喜帖街.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    color1: '#423e3d',
+    color2: '#595755'
   },
   {
     name: '少女的祈祷',
     singer: '杨千嬅',
     cover: './少女的祈祷.webp',
     source: './少女的祈祷.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    color1: '#f1d3ab',
+    color2: '#c8c9a5'
   },
   {
     name: '泡沫',
@@ -58,6 +58,7 @@ const musicList = [
 
 //歌词
 import lyrics from './js/lyrics';
+import { gradient } from './js/lyrics';
 let lrcContent = ref(lyrics[0]);
 
 const lyricsx=ref(Array);
