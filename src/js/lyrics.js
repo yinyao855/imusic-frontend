@@ -225,7 +225,18 @@ const gradient = [
 background: rgb(22,51,29);
 background: linear-gradient(178deg, rgba(22,51,29,1) 0%, rgba(213,236,228,1) 100%);
 `,
-
+`
+background: rgb(16,16,16);
+background: linear-gradient(129deg, rgba(16,16,16,1) 0%, rgba(7,7,7,1) 100%);
+`,
+`
+background: rgb(66,62,61);
+background: linear-gradient(81deg, rgba(66,62,61,1) 0%, rgba(89,87,85,1) 92%);
+`,
+`
+background: rgb(241,211,171);
+background: linear-gradient(96deg, rgba(241,211,171,1) 0%, rgba(200,201,165,1) 37%, rgba(249,232,181,1) 83%);
+`,
 `
 background: rgb(240,2,5);
 background: linear-gradient(11deg, rgba(240,2,5,1) 0%, rgba(7,9,10,1) 37%, rgba(112,3,15,1) 91%, rgba(8,10,11,1) 100%);
