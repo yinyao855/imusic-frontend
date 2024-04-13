@@ -93,11 +93,11 @@
               <path d="m0 0v22l18-11z" fill="#000"></path>
             </svg>
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20"
-                 fill="#fff"
+                 fill="black"
                  height="20" v-if="isPlaying">
               <path
                   d="M128 106.858667C128 94.976 137.621333 85.333333 149.12 85.333333h85.76c11.648 0 21.12 9.6 21.12 21.525334V917.12c0 11.882667-9.621333 21.525333-21.12 21.525333H149.12A21.290667 21.290667 0 0 1 128 917.141333V106.88z m640 0c0-11.882667 9.621333-21.525333 21.12-21.525334h85.76c11.648 0 21.12 9.6 21.12 21.525334V917.12c0 11.882667-9.621333 21.525333-21.12 21.525333h-85.76a21.290667 21.290667 0 0 1-21.12-21.525333V106.88z"
-                  fill="#3D3D3D"></path>
+                  fill="black"></path>
             </svg>
           </button>
           <button class="card__btn">
@@ -245,25 +245,6 @@ onBeforeUnmount(() => {
   audioPlayer.value.removeEventListener('timeupdate', getCurrentTime);
 });
 
-// function parseLRC(lrc) {
-//   const lines = lrc.split('\n');
-//   const lyrics = [];
-//   const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\](.*)/;
-
-//   lines.forEach(line => {
-//     const match = timeRegex.exec(line);
-//     if (match) {
-//       const minute = parseInt(match[1]);
-//       const second = parseInt(match[2]);
-//       const millisecond = parseInt(match[3]);
-//       const timestamp = minute * 60 + second + millisecond / 1000;
-//       const text = match[4].trim();
-//       lyrics.push({timestamp, text});
-//     }
-//   });
-//   return lyrics;
-// }
-
 function displayLyrics(lyrics, currentTime) {
   console.log(currentTime)
   for (let i = 0; i < lyrics.length; i++) {
@@ -337,7 +318,7 @@ function displayLyrics(lyrics, currentTime) {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255, 0.5);
   font-weight: bolder;
   font-size: 250%;
   line-height: 2;
@@ -348,7 +329,7 @@ function displayLyrics(lyrics, currentTime) {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255, 0.5);
   line-height: 2.5;
   font-size: 170%;
   text-align: center;
