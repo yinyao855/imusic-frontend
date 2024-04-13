@@ -37,6 +37,12 @@ const musicList = [
     singer: '杨千嬅',
     cover: './少女的祈祷.webp',
     source: './少女的祈祷.mp3'
+  },
+  {
+    name: '泡沫',
+    singer: '邓紫棋',
+    cover: './泡沫.webp',
+    source: './泡沫.mp3'
   }
 ]
 
