@@ -59,7 +59,7 @@
             <div class="card__time card__time-passed">{{ currenttime }}</div>
             <div class="card__timeline">
               <input type="range" min="0" :max="maxlength" v-model="currentduration" @input="handleChange">
-<!--              <progress v-model="currentduration" :max="maxlength" @input="handleChange"></progress>-->
+              <!--              <progress v-model="currentduration" :max="maxlength" @input="handleChange"></progress>-->
             </div>
             <div class="card__time card__time-left">{{ durationtime }}</div>
           </div>
@@ -88,7 +88,8 @@
                  v-if="!isPlaying">
               <path d="m0 0v22l18-11z" fill="#000"></path>
             </svg>
-            <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" fill="#fff"
+            <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20"
+                 fill="#fff"
                  height="20" v-if="isPlaying">
               <path
                   d="M128 106.858667C128 94.976 137.621333 85.333333 149.12 85.333333h85.76c11.648 0 21.12 9.6 21.12 21.525334V917.12c0 11.882667-9.621333 21.525333-21.12 21.525333H149.12A21.290667 21.290667 0 0 1 128 917.141333V106.88z m640 0c0-11.882667 9.621333-21.525333 21.12-21.525334h85.76c11.648 0 21.12 9.6 21.12 21.525334V917.12c0 11.882667-9.621333 21.525333-21.12 21.525333h-85.76a21.290667 21.290667 0 0 1-21.12-21.525333V106.88z"
@@ -119,19 +120,32 @@
       </div>
     </div>
     <div class="col2">
-    <ul style="width:100%;">
-    <span class="box" v-for="(item, index) in lyricsshow"  :key="index" :class="{ 'highlighted': item.special ,'nothighlighted' : !item.special}">
+      <div class="button_div">
+        <buttonchangesize style="display: block" @fullsize="changesize"></buttonchangesize>
+      </div>
+
+      <div style="width:100%;">
+        <ul style="width:100%;">
+    <span class="box" v-for="(item, index) in lyricsshow" :key="index"
+          :class="{ 'highlighted': item.special ,'nothighlighted' : !item.special}">
       {{ item.text }}
       <br>
     </span>
-    </ul>
-  </div>
+        </ul>
+      </div>
+    </div>
   </div>
 
 </template>
 
 <script setup>
 import {ref, onMounted, onBeforeUnmount} from 'vue';
+import buttonchangesize from './buttonchangesize.vue'
+import { defineEmits } from 'vue';
+const emit = defineEmits(['fullsize']);
+const changesize =()=>{
+  emit('fullsize');
+}
 
 const selectedFile = ref(null);
 const audioSrc = ref('');
@@ -347,18 +361,18 @@ function displayLyrics(lyrics, currentTime) {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(0,0,0,0.5);
+  color: rgb(0, 0, 0, 0.5);
   font-weight: bolder;
   font-size: 200%;
   line-height: 2;
   text-align: center;
 }
 
-.nothighlighted{
+.nothighlighted {
   display: block; /* 或 inline-block */
   width: 100%; /* 例如：指定一个宽度 */
   margin: 0 auto; /* 水平居中 */
-  color: rgb(0,0,0,0.5);
+  color: rgb(0, 0, 0, 0.5);
   line-height: 2.5;
   font-size: 120%;
   text-align: center;
@@ -383,6 +397,6 @@ function displayLyrics(lyrics, currentTime) {
 
 .box:hover {
   border-radius: 10px;
-  background-color: rgb(255,255,255,0.2);
+  background-color: rgb(255, 255, 255, 0.2);
 }
 </style>

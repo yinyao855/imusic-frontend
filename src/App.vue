@@ -19,7 +19,7 @@ function changesize(){
   <!-- <Progress></Progress> -->
   <MusicPlayer v-if="!isfull" source="./难得有情人.mp3" name="难得有情人" singer="关淑怡" cover="./cover.png" @fullsize="changesize"></MusicPlayer>
   <!-- <MusicPlayer source="./天下-张杰.128.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
-  <Music_Play v-if="isfull" ></Music_Play>
+  <Music_Play v-if="isfull" @fullsize="changesize"></Music_Play>
 </template>
 
 <style>
