@@ -1,15 +1,18 @@
 <template>
   <div class="outcontainer">
     <div class="col1">
+      <div class="button_div">
+        <buttonchangesize style="display: block" @fullsize="changesize"></buttonchangesize>
+      </div>
       <div class="card">
         <label for="uploadx">
           <input type="file" @change="handleFileChange" id="uploadx"
                  style="opacity: 0; position: absolute; left: -9999px;">
-          <button class="card__btn card__btn-menu">
+          <!-- <button class="card__btn card__btn-menu">
             <svg fill="none" height="18" viewBox="0 0 24 18" width="24" xmlns="http://www.w3.org/2000/svg">
               <path d="m0 0h24v3h-12-12zm0 7.5h24v3h-24zm0 7.5h24v3h-24z" fill="#fff"></path>
             </svg>
-          </button>
+          </button> -->
           <div class="card__img">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="content stop">
               <circle r="60" fill="#ffd8c9" cy="64" cx="64"></circle>
@@ -120,11 +123,9 @@
       </div>
     </div>
     <div class="col2">
-      <div class="button_div">
-        <buttonchangesize style="display: block" @fullsize="changesize"></buttonchangesize>
-      </div>
+      
 
-      <div style="width:100%;">
+      <div style="width:100%;  display:flex; align-items: center; justify-content: center; margin: 0;" class="lyricclass">
         <ul style="width:100%;">
     <span class="box" v-for="(item, index) in lyricsshow" :key="index"
           :class="{ 'highlighted': item.special ,'nothighlighted' : !item.special}">
@@ -363,7 +364,7 @@ function displayLyrics(lyrics, currentTime) {
   margin: 0 auto; /* 水平居中 */
   color: rgb(0, 0, 0, 0.5);
   font-weight: bolder;
-  font-size: 200%;
+  font-size: 250%;
   line-height: 2;
   text-align: center;
 }
@@ -374,7 +375,7 @@ function displayLyrics(lyrics, currentTime) {
   margin: 0 auto; /* 水平居中 */
   color: rgb(0, 0, 0, 0.5);
   line-height: 2.5;
-  font-size: 120%;
+  font-size: 170%;
   text-align: center;
 }
 
