@@ -3,16 +3,16 @@
   <audio :src="source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
 
   <!-- 缩小后的音乐播放器 -->
-  <transition name="player-transition">
+  <Transition name="player-transition">
     <div v-if="isMinimized" class="fixed bottom-6 left-6 w-32 h-32 rounded-full bg-red-100 animate-spin1"
       @click="expandPlayer">
       <img :src="cover" alt="Album Art" class="h-32 w-32 rounded-full">
     </div>
-  </transition>
+  </Transition>
 
-  <transition name="player-transiton1">
-    <div class="fixed bottom-0 w-full h-36" v-if="!isMinimized">
-      <div class="music-player-container h-28 mx-3 my-2 bg-slate-50 rounded-md shadow-lg flex">
+  <Transition name="slide-fade">
+    <div class="fixed bottom-0 w-full h-36 bg-opacity-0" v-if="!isMinimized">
+      <div class="music-player-container h-28 mx-3 my-2 bg-slate-50 rounded-md shadow-lg flex bg-opacity-100">
         <!-- 专辑封面 -->
         <div class="rounded h-24 w-24 my-auto ml-4">
           <img :src="cover" alt="Album Art" class="h-24 w-24 rounded">
@@ -132,13 +132,13 @@
         </div>
       </div>
     </div>
-  </transition>
+  </Transition>
 
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps, watch, defineEmits } from 'vue';
+import { defineProps, watch} from 'vue';
 
 const props = defineProps({
   cover: String,
@@ -222,44 +222,34 @@ function fullsize() {
   /* 设置背景图片透明度 */
 }
 
-/* 过渡效果 */
+/* 最小化播放器的过渡效果 */
 .player-transition-enter-active,
 .player-transition-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.8s ease-in-out;
 }
 
-.player-transition-enter,
+.player-transition-enter-from,
 .player-transition-leave-to {
   opacity: 0;
   transform: scale(0);
 }
 
-/* 过渡效果 */
-.player-transition1-enter-active,
-.player-transition1-leave-active {
-  transition: all 3s ease;
+/* 默认播放器的过渡效果 */
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
 }
 
-.player-transition1-enter,
-.player-transition1-leave-to {
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(50px);
   opacity: 0;
-  transform: translateY(100%);
-  /* 初始时从下方移动进入或离开 */
 }
 
-.player-transition1-enter-active,
-.player-transition1-leave-active {
-  transition: all 1s ease;
-}
-
-.player-transition1-enter,
-.player-transition1-leave-to {
-  opacity: 1;
-  transform: translateY(-10);
-  /* 从下方移动到正常位置 */
-}
-
-
+/* 旋转动画 */
 @keyframes spin {
   to {
     transform: rotate(360deg);
