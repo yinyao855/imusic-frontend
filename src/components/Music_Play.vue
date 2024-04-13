@@ -88,7 +88,7 @@
             </svg>
           </button>
           <button class="card__btn card__btn-play" @click="togglePlay">
-            <svg fill="#fff" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg"
+            <svg fill="#000" height="22" viewBox="0 0 18 22" width="18" xmlns="http://www.w3.org/2000/svg"
                  v-if="!isPlaying">
               <path d="m0 0v22l18-11z" fill="#000"></path>
             </svg>
