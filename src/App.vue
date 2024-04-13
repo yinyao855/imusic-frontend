@@ -18,41 +18,31 @@ const musicList = [
     name: '难得有情人',
     singer: '关淑怡',
     cover: './难得有情人.png',
-    source: './难得有情人.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    source: './难得有情人.mp3'
   },
   {
     name: '天下',
     singer: '张杰',
     cover: './天下.webp',
-    source: './天下.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    source: './天下.mp3'
   },
   {
     name: '喜帖街',
     singer: '谢安琪',
     cover: './喜帖街.webp',
-    source: './喜帖街.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    source: './喜帖街.mp3'
   },
   {
     name: '少女的祈祷',
     singer: '杨千嬅',
     cover: './少女的祈祷.webp',
-    source: './少女的祈祷.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    source: './少女的祈祷.mp3'
   },
   {
     name: '泡沫',
     singer: '邓紫棋',
     cover: './泡沫.webp',
-    source: './泡沫.mp3',
-    color1: '#16331d',
-    color2: '#d5ece4'
+    source: './泡沫.mp3'
   }
 ]
 
@@ -115,8 +105,7 @@ function backSong(){
   @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
   <!-- <MusicPlayer source="./天下-张杰.128.mp3" name="天下" singer="张杰" cover="./天下.png"></MusicPlayer> -->
   <Music_Play v-if="isfull" class="fixed top-0 left-0 w-full" @fullsize="changesize" :source="currentMusic.source"
-  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx" 
-  :color1="currentMusic.color1" :color2="currentMusic.color2"></Music_Play>
+  :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"></Music_Play>
 </template>
 
 <style>

@@ -122,11 +122,7 @@
 }
 
 
-.outcontainer {
-    display: grid;
-    height:100%;
-    grid-template-columns: 1fr 1fr;
-}
+
 
 .col1{
     height:100%;
