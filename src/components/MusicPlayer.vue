@@ -1,6 +1,6 @@
 <template>
   <!-- 音乐播放 -->
-  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls autoplay></audio>
+  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
 
   <!-- 缩小后的音乐播放器 -->
   <Transition name="player-transition">
