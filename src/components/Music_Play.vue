@@ -103,7 +103,6 @@ const props=defineProps({
   source:String,
   singer:String,
   name:String,
-  lyrics:Array,
   sty:String,
 })
 
@@ -112,6 +111,7 @@ const durationtime = defineModel("duration");
 const currentTime = defineModel("currentTime");
 const currentduration = defineModel("currentTimeInSeconds");
 const durationInSeconds = defineModel("durationInSeconds");
+const lyric = defineModel("lyric")
 
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
@@ -150,6 +150,7 @@ const getcurrentTime = () => {
 
 function displayLyrics(lyrics, currentTime) {
   console.log(currentTime)
+  console.log(lyrics)
   for (let i = 0; i < lyrics.length; i++) {
     if (currentTime >= lyrics[i].timestamp && (!lyrics[i + 1] || currentTime < lyrics[i + 1].timestamp)) {
       text.value = lyrics[i].text;
@@ -183,9 +184,9 @@ function displayLyrics(lyrics, currentTime) {
   }
 }
 
-watch(() => currentduration.value, (newValue) => {
+watch(currentduration, (newValue) => {
   console.log("hello");
-  displayLyrics(lyrics.value, currentduration.value);
+  displayLyrics(lyric.value, currentduration.value);
 });
 </script>
 
