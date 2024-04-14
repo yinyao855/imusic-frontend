@@ -36,7 +36,7 @@ import lyrics from './js/lyrics';
 //背景
 import { gradient } from './js/lyrics';
 
-const isfull = ref(false);
+const isfull = ref(true);
 
 function changesize() {
   isfull.value = !isfull.value;
