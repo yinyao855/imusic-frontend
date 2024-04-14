@@ -162,7 +162,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps, watch } from 'vue';
+import { defineProps, watch, defineModel } from 'vue';
 
 const props = defineProps({
   cover: String,
@@ -179,11 +179,11 @@ const emit = defineEmits([
 //是否正在播放
 const isPlaying = ref(false);
 //当前播放时间和总时间
-const currentTime = ref('0:00');
+const currentTime = defineModel("currenttime");
 const duration = ref('0:00');
 //当前播放时间和总时间（秒）
 const durationInSeconds = ref(0);
-const currentTimeInSeconds = ref(0);
+const currentTimeInSeconds = defineModel("currentduration");
 //音频播放器对象
 const audioPlayer = ref(null);
 //定义播放模式, 0为列表循环，1为单曲循环，2为随机播放

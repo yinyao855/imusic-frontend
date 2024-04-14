@@ -102,6 +102,9 @@ function backSong(){
   lrcContent.value = lyrics[index];
   lyricsx.value=parseLRC(lrcContent.value);
 }
+
+const currenttime=ref("0:00");
+const currentduration=ref(0);
 </script>
 
 <template>
@@ -116,12 +119,12 @@ function backSong(){
       <div v-if="!isfull">
         <MusicPlayer :key="1" :source="currentMusic.source" :name="currentMusic.name" 
           :singer="currentMusic.singer" :cover="currentMusic.cover" 
-          @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
+          @fullsize="changesize" @back="backSong" @next="nextSong" v-model:currenttime="currenttime" v-model:currentduration="currentduration"></MusicPlayer>
       </div>
     
       <transition name="slide" appear>
       <div v-show="isfull" key="musicPlay" class="transition-container">
-        <Music_Play class="fixed top-0 left-0 w-full" @fullsize="changesize" :source="currentMusic.source"
+        <Music_Play class="fixed top-0 left-0 w-full" v-model:currenttime="currenttime" v-model:currentduration="currentduration"  @fullsize="changesize" :source="currentMusic.source"
           :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"
           :sty="gradient[index]"></Music_Play>
       </div>

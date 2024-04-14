@@ -134,7 +134,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, onBeforeUnmount ,watch} from 'vue';
+import {ref, onMounted, onBeforeUnmount ,defineModel} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
 const emit = defineEmits(['fullsize']);
@@ -152,8 +152,8 @@ const props=defineProps({
 
 const isPlaying = ref(false);
 const durationtime = ref('0:00');
-const currenttime = ref('0:00');
-const currentduration = ref(0);
+const currenttime = defineModel("currenttime");
+const currentduration = defineModel("currentduration");
 const maxlength = ref(100);
 
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
