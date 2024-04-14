@@ -185,7 +185,8 @@ const props = defineProps({
 const emit = defineEmits([
   'fullsize',
   'back',
-  'next'
+  'next',
+  'togglePlay',
 ]);
 
 //是否正在播放
@@ -215,14 +216,12 @@ const changeVolume = () => {
 //播放上一首
 const goback = () => {
   emit('back');
-  isPlaying.value = true;
   console.log('back');
 }
 
 //播放下一首
 const gonext = () => {
   emit('next');
-  isPlaying.value = true;
   console.log('next');
 }
 
@@ -236,12 +235,7 @@ const changeMode = () => {
 console.log(props.source);
 
 const togglePlay = () => {
-  if (isPlaying.value) {
-    audioPlayer.value.pause();
-  } else {
-    audioPlayer.value.play();
-  }
-  isPlaying.value = !isPlaying.value;
+  emit('togglePlay');
 };
 
 const seek = () => {

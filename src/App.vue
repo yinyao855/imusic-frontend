@@ -1,6 +1,6 @@
 <template>
   <Upload></Upload>
-  <Test></Test>
+  <!-- <Test></Test> -->
 
   <!-- 音乐播放 -->
   <audio :src="currentMusic.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
@@ -10,7 +10,7 @@
       :cover="currentMusic.cover" @fullsize="changesize" @back="backSong" @next="nextSong"
       v-model:currentTime="currentTime" v-model:duration="duration" v-model:isPlaying="isPlaying"
       v-model:durationInSeconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds"
-      v-model:audioPlayer="audioPlayer">
+      v-model:audioPlayer="audioPlayer" @togglePlay="togglePlay">
     </MusicPlayer>
   </div>
 
@@ -19,7 +19,7 @@
       <Music_Play class="fixed top-0 left-0 w-full" v-model:currenttime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration" 
         v-model:durationInseconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"
-        :sty="gradient[index]"></Music_Play>
+        :sty="gradient[index]" @togglePlay="togglePlay"></Music_Play>
     </div>
   </transition>
 </template>
@@ -116,7 +116,14 @@ function nextSong() {
   // audioPlayer.value.play();
 }
 
-
+const togglePlay = () => {
+  if (isPlaying.value) {
+    audioPlayer.value.pause();
+  } else {
+    audioPlayer.value.play();
+  }
+  isPlaying.value = !isPlaying.value;
+};
 
 function parseLRC(lrc) {
   const lines = lrc.split('\n');

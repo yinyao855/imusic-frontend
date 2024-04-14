@@ -94,7 +94,7 @@
 import {ref,defineModel,onMounted} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
-const emit = defineEmits(['fullsize']);
+const emit = defineEmits(['fullsize','togglePlay']);
 const changesize =()=>{
   emit('fullsize');
 }
@@ -123,32 +123,9 @@ const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, 
 const text = ref('未播放');
 const nowline = ref(0);
 
-// const handleChange = () => {
-//   if (audioPlayer.value) {
-//     audioPlayer.value.currentTime = currentduration.value;
-//   }
-// };
-
-const playAudio = () => {
-  isPlaying.value = true;
-  const content = document.querySelector('.content');
-  content.classList.add('rotate');
-  content.classList.remove('stop');
-};
-
-const pauseAudio = () => {
-  const content = document.querySelector('.content');
-  isPlaying.value = false;
-  content.classList.add('stop');
-  content.classList.remove('rotate');
-};
 
 const togglePlay = () => {
-  if (isPlaying.value) {
-    pauseAudio();
-  } else {
-    playAudio();
-  }
+  emit('togglePlay');
 };
 
 const restart = () => {
