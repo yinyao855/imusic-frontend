@@ -6,13 +6,6 @@
       </div>
       <div class="card">
         <label for="uploadx">
-          <!-- <input type="file" @change="handleFileChange" id="uploadx"
-                 style="opacity: 0; position: absolute; left: -9999px;"> -->
-          <!-- <button class="card__btn card__btn-menu">
-            <svg fill="none" height="18" viewBox="0 0 24 18" width="24" xmlns="http://www.w3.org/2000/svg">
-              <path d="m0 0h24v3h-12-12zm0 7.5h24v3h-24zm0 7.5h24v3h-24z" fill="#fff"></path>
-            </svg>
-          </button> -->
           <div class="card__img">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="content stop">
               <circle r="60" fill="#ffd8c9" cy="64" cx="64"></circle>
@@ -141,7 +134,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted, onBeforeUnmount ,watch} from 'vue';
+import {ref, onMounted, onBeforeUnmount ,defineModel} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
 const emit = defineEmits(['fullsize']);
@@ -159,8 +152,8 @@ const props=defineProps({
 
 const isPlaying = ref(false);
 const durationtime = ref('0:00');
-const currenttime = ref('0:00');
-const currentduration = ref(0);
+const currenttime = defineModel("currenttime");
+const currentduration = defineModel("currentduration");
 const maxlength = ref(100);
 
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
