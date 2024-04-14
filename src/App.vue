@@ -20,7 +20,6 @@
          v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" v-model:lyric="lyricsx" @update="updateTime"
         :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
-        <div>{{ test }}</div>
     </div>
   </transition>
 </template>
