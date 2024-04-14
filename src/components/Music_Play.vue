@@ -33,7 +33,7 @@
               </g>
             </svg>
           </button>
-          <button class="card__btn">
+          <button class="card__btn" @click="back">
             <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M11.5 8V0L0 8L11.5 16V8ZM23 0L11.5 8L23 16V0Z" fill="#fff"></path>
             </svg>
@@ -51,7 +51,7 @@
                   fill="black"></path>
             </svg>
           </button>
-          <button class="card__btn">
+          <button class="card__btn" @click="next">
             <svg width="23" height="16" viewBox="0 0 23 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M11.5 8V0L23 8L11.5 16V8ZM0 0L11.5 8L0 16V0Z" fill="#fff"></path>
             </svg>
@@ -94,7 +94,7 @@
 import {ref,defineModel,watch} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
-const emit = defineEmits(['fullsize','togglePlay','update']);
+const emit = defineEmits(['fullsize','togglePlay','update','back','next']);
 const changesize =()=>{
   emit('fullsize');
 }
@@ -128,15 +128,18 @@ const togglePlay = () => {
   emit('togglePlay');
 };
 
+const back = () =>{
+  emit('back');
+}
+
+const next = () =>{
+  emit('next');
+}
+
 const restart = () => {
   currentduration.value=0;
   currentTime.value='0:00';
 };
-
-const handlechange = () =>{
-  console.log("hello");
-  getcurrentTime();
-}
 
 const getcurrentTime = () => {
   const minute = currentduration.value / 60;

@@ -19,7 +19,7 @@
       <Music_Play class="fixed top-0 left-0 w-full" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
         v-model:durationInseconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx" @update="updateTime"
-        :sty="gradient[index]" @togglePlay="togglePlay"></Music_Play>
+        :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
     </div>
   </transition>
 </template>

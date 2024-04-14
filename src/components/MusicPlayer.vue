@@ -161,21 +161,6 @@
 import { ref } from 'vue';
 import { defineProps, watch, defineModel } from 'vue';
 
-// function initPlayer() {
-//   audioPlayer.value.currentTime = currentTimeInSeconds.value;
-//   durationInSeconds.value = audioPlayer.value.duration;
-//   duration.value = `${Math.floor(audioPlayer.value.duration / 60)}:${Math.floor(audioPlayer.value.duration % 60)}`;
-//   console.log("初始化"+props.source);
-//   console.log("初始化"+duration.value);
-//   console.log("初始化"+durationInSeconds.value);
-//   console.log("初始化"+currentTimeInSeconds.value);
-//   if (isPlaying.value) {
-//     audioPlayer.value.play();
-//   }else{
-//     audioPlayer.value.pause();
-//   }
-// }
-
 const props = defineProps({
   cover: String,
   name: String,
