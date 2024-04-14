@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-import {ref,defineModel,onMounted} from 'vue';
+import {ref,defineModel,watch} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
 const emit = defineEmits(['fullsize','togglePlay','update']);
@@ -132,6 +132,11 @@ const restart = () => {
   currentduration.value=0;
   currentTime.value='0:00';
 };
+
+const handlechange = () =>{
+  console.log("hello");
+  getcurrentTime();
+}
 
 const getcurrentTime = () => {
   const minute = currentduration.value / 60;
@@ -175,6 +180,10 @@ function displayLyrics(lyrics, currentTime) {
   }
 }
 
+watch(() => currentduration.value, (newValue) => {
+  console.log("hello");
+  displayLyrics(lyrics.value, currentduration.value);
+});
 </script>
 
 
