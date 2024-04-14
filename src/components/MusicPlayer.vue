@@ -1,6 +1,6 @@
 <template>
   <!-- 音乐播放 -->
-  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
+  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls ></audio>
 
   <!-- 缩小后的音乐播放器 -->
   <Transition name="player-transition">
@@ -163,6 +163,22 @@
 <script setup>
 import { ref } from 'vue';
 import { defineProps, watch, defineModel } from 'vue';
+import { onMounted } from 'vue';
+
+// function initPlayer() {
+//   audioPlayer.value.currentTime = currentTimeInSeconds.value;
+//   durationInSeconds.value = audioPlayer.value.duration;
+//   duration.value = `${Math.floor(audioPlayer.value.duration / 60)}:${Math.floor(audioPlayer.value.duration % 60)}`;
+//   console.log("初始化"+props.source);
+//   console.log("初始化"+duration.value);
+//   console.log("初始化"+durationInSeconds.value);
+//   console.log("初始化"+currentTimeInSeconds.value);
+//   if (isPlaying.value) {
+//     audioPlayer.value.play();
+//   }else{
+//     audioPlayer.value.pause();
+//   }
+// }
 
 const props = defineProps({
   cover: String,
@@ -224,13 +240,22 @@ const changeMode = () => {
 console.log(props.source);
 
 const togglePlay = () => {
-  if (isPlaying.value) {
-    audioPlayer.value.pause();
-  } else {
-    audioPlayer.value.play();
-  }
+  // if (isPlaying.value) {
+  //   audioPlayer.value.pause();
+  // } else {
+  //   audioPlayer.value.play();
+  // }
   isPlaying.value = !isPlaying.value;
 };
+
+//监听播放器播放状态
+watch(isPlaying, () => {
+  if (isPlaying.value) {
+    audioPlayer.value.play();
+  } else {
+    audioPlayer.value.pause();
+  }
+});
 
 const updateTime = () => {
   const audio = audioPlayer.value;
