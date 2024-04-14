@@ -87,6 +87,7 @@
       </div>
     </div>
   </div>
+  <input type="range" min="0" :max="durationInSeconds" v-model="test">
 
 </template>
 
@@ -112,6 +113,7 @@ const currentTime = defineModel("currentTime");
 const currentduration = defineModel("currentTimeInSeconds");
 const durationInSeconds = defineModel("durationInSeconds");
 const lyric = defineModel("lyric")
+const test=defineModel("test");
 
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
@@ -126,6 +128,25 @@ const nowline = ref(0);
 
 const togglePlay = () => {
   emit('togglePlay');
+  if(!isPlaying.value){
+    playAudio();
+  }
+  else{
+    pauseAudio();
+  }
+};
+
+const playAudio = () => {
+  const content = document.querySelector('.content');
+  content.classList.add('rotate');
+  content.classList.remove('stop');
+}
+
+
+const pauseAudio = () => {
+  const content = document.querySelector('.content');
+  content.classList.add('stop');
+  content.classList.remove('rotate');
 };
 
 const back = () =>{
