@@ -174,12 +174,6 @@ const handleChange = () => {
 };
 
 
-// const handleFileChange = (event) => {
-//   const file = event.target.files[0];
-//   selectedFile.value = file;
-//   audioSrc.value = URL.createObjectURL(file);
-// };
-
 const playAudio = () => {
   isPlaying.value = true;
   audioPlayer.value.play();
