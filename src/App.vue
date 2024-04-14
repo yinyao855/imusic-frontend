@@ -121,7 +121,7 @@ const musicList = [
   {
     name: "海阔天空",
     singer: "Beyond",
-    cover: "./海阔天空.webp",
+    cover: "./海阔天空.jpg",
     source: "./海阔天空.mp3",
   },
 ];

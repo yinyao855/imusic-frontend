@@ -435,8 +435,8 @@ background: rgb(0,19,26);
 background: linear-gradient(94deg, rgba(0,19,26,1) 0%, rgba(0,19,26,1) 98%);
 `,
 `
-background: rgb(235,240,241);
-background: linear-gradient(170deg, rgba(235,240,241,1) 0%, rgba(243,244,241,1) 95%);
+background: rgb(224,152,68);
+background: linear-gradient(89deg, rgba(224,152,68,1) 0%, rgba(164,121,151,1) 81%);
 `
 ]
 
