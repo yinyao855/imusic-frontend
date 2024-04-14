@@ -14,7 +14,7 @@
           <div class="card__wrapper">
             <div class="card__time card__time-passed">{{ currentTime }}</div>
             <div class="card__timeline">
-              <input type="range" min="0" :max="durationInSeconds" v-model="currentduration">
+              <input type="range" min="0" :max="durationInSeconds" v-model="currentduration" @input="seek">
             </div>
             <div class="card__time card__time-left">{{ durationtime }}</div>
           </div>
@@ -114,6 +114,7 @@ const currentduration = defineModel("currentTimeInSeconds");
 const durationInSeconds = defineModel("durationInSeconds");
 const lyric = defineModel("lyric")
 const test=defineModel("test");
+const audioPlayer = defineModel("audioPlayer");
 
 const lyricsshow = ref([{text: '', special: false}, {text: '', special: false}, {text: '', special: false}, {
   text: '',
@@ -133,6 +134,13 @@ const togglePlay = () => {
   }
   else{
     pauseAudio();
+  }
+};
+
+const seek = () => {
+  if (audioPlayer.value) {
+    audioPlayer.value.currentTime = currentTimeInSeconds.value;
+    console.log(currentTimeInSeconds.value);
   }
 };
 

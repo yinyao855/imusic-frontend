@@ -16,7 +16,7 @@
 
   <transition name="slide" appear>
     <div v-if="isfull" key="musicPlay" class="transition-container">
-      <Music_Play class="fixed top-0 left-0 w-full" v-model:durationInSeconds="durationInSeconds" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
+      <Music_Play class="fixed top-0 left-0 w-full" v-model:audioPlayer="audioPlayer" v-model:durationInSeconds="durationInSeconds" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
          v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" v-model:lyric="lyricsx" @update="updateTime"
         :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
