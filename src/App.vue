@@ -78,9 +78,6 @@ const isfull = ref(false);
 
 function changesize() {
   isfull.value = !isfull.value;
-  // console.log("当前时间" + currenttime.value);
-  // console.log("当前秒数" + currentduration.value);
-  // console.log("是否播放" + isPlaying.value);
 }
 
 //歌单
@@ -120,6 +117,12 @@ const musicList = [
     singer: "The Chainsmokers,Coldplay",
     cover: "./Something Just Like This.webp",
     source: "./Something Just Like This.mp3",
+  },
+  {
+    name: "海阔天空",
+    singer: "Beyond",
+    cover: "./海阔天空.webp",
+    source: "./海阔天空.mp3",
   },
 ];
 
