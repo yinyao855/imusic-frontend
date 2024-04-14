@@ -12,7 +12,7 @@
           <div class="card__title" style="font-weight: bolder !important;">{{ props.name }}</div>
           <div class="card__subtitle">{{ props.singer }}</div>
           <div class="card__wrapper">
-            <div class="card__time card__time-passed">{{ currenttime }}</div>
+            <div class="card__time card__time-passed">{{ currentTime }}</div>
             <div class="card__timeline">
               <input type="range" min="0" :max="durationInSeconds" v-model="currentduration">
             </div>
@@ -109,7 +109,7 @@ const props=defineProps({
 
 const isPlaying = defineModel("isPlaying");
 const durationtime = defineModel("duration");
-const currenttime = defineModel("currenttime");
+const currentTime = defineModel("currentTime");
 const currentduration = defineModel("currentTimeInSeconds");
 const durationInSeconds = defineModel("durationInSeconds");
 
@@ -130,10 +130,10 @@ const togglePlay = () => {
 
 const restart = () => {
   currentduration.value=0;
-  currenttime.value='0:00';
+  currentTime.value='0:00';
 };
 
-const getCurrentTime = () => {
+const getcurrentTime = () => {
   const minute = currentduration.value / 60;
   const second = currentduration.value % 60;
   displayLyrics(props.lyrics, currentduration.value);
