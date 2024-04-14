@@ -94,7 +94,7 @@
 import {ref,defineModel,onMounted} from 'vue';
 import buttonchangesize from './buttonchangesize.vue'
 import { defineEmits } from 'vue';
-const emit = defineEmits(['fullsize','togglePlay']);
+const emit = defineEmits(['fullsize','togglePlay','update']);
 const changesize =()=>{
   emit('fullsize');
 }
@@ -175,13 +175,19 @@ function displayLyrics(lyrics, currentTime) {
   }
 }
 
+const handleChange = () =>{
+//   console.log("hello");
+//   const second=Math.floor(currentduration.value%60);
+//  const minute=Math.floor(currentduration.value/60);
+//   currenttime.value= `${minute}:${second < 10 ? '0' : ''}${second}`
+}
+
 
 import { watch } from 'vue';
 
-watch(currentduration, (newVal, oldVal) => {
-
-  displayLyrics(lyrics, currentduration.value);
-});
+// watch(currentduration, (newVal, oldVal) => {
+//   displayLyrics(lyrics, currentduration.value);
+// });
 
 </script>
 
