@@ -5,7 +5,7 @@
   </div>
 
   <!-- <Test></Test> -->
-  <div v-if="isPlaying">
+  <div v-if="isshow">
     <audio
       :src="currentMusic.source"
       class="hidden"
@@ -124,6 +124,7 @@ const musicList = [
 ];
 
 let lrcContent = ref(lyrics[0]);
+const isshow = ref(false);
 
 const lyricsx = ref(Array);
 lyricsx.value = parseLRC(lyrics[0]);
@@ -187,7 +188,7 @@ const audioPlayer = ref(null);
 const isPlaying = ref(false);
 
 const begin = () => {
-  isPlaying.value = true;
+  isshow.value = true;
 };
 
 //当前播放时间和总时间
