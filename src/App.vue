@@ -18,13 +18,9 @@
     <div v-if="isfull" key="musicPlay" class="transition-container">
       <Music_Play class="fixed top-0 left-0 w-full" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
         v-model:durationInseconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
-<<<<<<< HEAD
-        :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx" @update="updateTime"
-        :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
-=======
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" v-model:lyric="lyricsx" @update="updateTime"
         :sty="gradient[index]" @togglePlay="togglePlay"></Music_Play>
->>>>>>> 19f66deb982280bd096407b8510d8fffbb2cd65f
+
     </div>
   </transition>
 </template>
