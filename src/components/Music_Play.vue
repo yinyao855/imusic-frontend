@@ -6,13 +6,6 @@
       </div>
       <div class="card">
         <label for="uploadx">
-          <!-- <input type="file" @change="handleFileChange" id="uploadx"
-                 style="opacity: 0; position: absolute; left: -9999px;"> -->
-          <!-- <button class="card__btn card__btn-menu">
-            <svg fill="none" height="18" viewBox="0 0 24 18" width="24" xmlns="http://www.w3.org/2000/svg">
-              <path d="m0 0h24v3h-12-12zm0 7.5h24v3h-24zm0 7.5h24v3h-24z" fill="#fff"></path>
-            </svg>
-          </button> -->
           <div class="card__img">
             <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" class="content stop">
               <circle r="60" fill="#ffd8c9" cy="64" cx="64"></circle>
