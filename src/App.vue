@@ -16,8 +16,8 @@
 
   <transition name="slide" appear>
     <div v-if="isfull" key="musicPlay" class="transition-container">
-      <Music_Play class="fixed top-0 left-0 w-full" v-model:test="test" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
-        v-model:durationInseconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
+      <Music_Play class="fixed top-0 left-0 w-full" v-model:durationInSeconds="durationInSeconds" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
+         v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
         :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" v-model:lyric="lyricsx" @update="updateTime"
         :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
         <div>{{ test }}</div>
@@ -36,7 +36,6 @@ import { ref } from 'vue';
 import lyrics from './js/lyrics';
 //背景
 import { gradient } from './js/lyrics';
-const test=ref(0);
 
 const isfull = ref(false);
 

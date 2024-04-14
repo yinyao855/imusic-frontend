@@ -87,7 +87,7 @@
       </div>
     </div>
   </div>
-  <input type="range" min="0" :max="durationInSeconds" v-model="test">
+  
 
 </template>
 
