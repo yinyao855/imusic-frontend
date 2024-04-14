@@ -1,7 +1,4 @@
 <template>
-  <!-- 音乐播放 -->
-  <audio :src="props.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls ></audio>
-
   <!-- 缩小后的音乐播放器 -->
   <Transition name="player-transition">
     <div v-if="isMinimized" class="fixed bottom-6 left-6 w-32 h-32 rounded-full bg-red-100 animate-spin1"
@@ -163,7 +160,6 @@
 <script setup>
 import { ref } from 'vue';
 import { defineProps, watch, defineModel } from 'vue';
-import { onMounted } from 'vue';
 
 // function initPlayer() {
 //   audioPlayer.value.currentTime = currentTimeInSeconds.value;
@@ -182,7 +178,6 @@ import { onMounted } from 'vue';
 
 const props = defineProps({
   cover: String,
-  source: String,
   name: String,
   singer: String,
 });
@@ -192,16 +187,17 @@ const emit = defineEmits([
   'back',
   'next'
 ]);
+
 //是否正在播放
 const isPlaying = defineModel("isPlaying");
 //当前播放时间和总时间
-const currentTime = defineModel("currenttime");
-const duration = ref('0:00');
+const currentTime = defineModel("currentTime");
+const duration = defineModel("duration");
 //当前播放时间和总时间（秒）
-const durationInSeconds = ref(0);
-const currentTimeInSeconds = defineModel("currentduration");
+const durationInSeconds = defineModel("durationInSeconds");
+const currentTimeInSeconds = defineModel("currentTimeInSeconds");
 //音频播放器对象
-const audioPlayer = ref(null);
+const audioPlayer = defineModel("audioPlayer");
 //定义播放模式, 0为列表循环，1为单曲循环，2为随机播放
 const playerMode = ref(0);
 const playerModeText = ref('列表循环');
@@ -240,31 +236,12 @@ const changeMode = () => {
 console.log(props.source);
 
 const togglePlay = () => {
-  // if (isPlaying.value) {
-  //   audioPlayer.value.pause();
-  // } else {
-  //   audioPlayer.value.play();
-  // }
-  isPlaying.value = !isPlaying.value;
-};
-
-//监听播放器播放状态
-watch(isPlaying, () => {
   if (isPlaying.value) {
-    audioPlayer.value.play();
-  } else {
     audioPlayer.value.pause();
+  } else {
+    audioPlayer.value.play();
   }
-});
-
-const updateTime = () => {
-  const audio = audioPlayer.value;
-  const minutes = Math.floor(audio.currentTime / 60);
-  const seconds = Math.floor(audio.currentTime % 60);
-  currentTime.value = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  duration.value = `${Math.floor(audio.duration / 60)}:${Math.floor(audio.duration % 60)}`;
-  currentTimeInSeconds.value = audio.currentTime;
-  durationInSeconds.value = audio.duration;
+  isPlaying.value = !isPlaying.value;
 };
 
 const seek = () => {
