@@ -150,7 +150,7 @@ const props=defineProps({
   sty:String,
 })
 
-const isPlaying = ref(false);
+const isPlaying = defineModel("isPlaying");
 const durationtime = ref('0:00');
 const currenttime = defineModel("currenttime");
 const currentduration = defineModel("currentduration");

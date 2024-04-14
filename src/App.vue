@@ -75,6 +75,7 @@ function nextSong(){
   lrcContent.value = lyrics[index];
   lyricsx.value=parseLRC(lrcContent.value);
   console.log(lyricsx.value);
+  isPlaying.value = true;
 }
 
 function parseLRC(lrc) {
@@ -104,6 +105,7 @@ function backSong(){
   currentMusic.value = musicList[index];
   lrcContent.value = lyrics[index];
   lyricsx.value=parseLRC(lrcContent.value);
+  isPlaying.value = true;
 }
 
 const currenttime=ref("0:00");
@@ -132,7 +134,7 @@ const isPlaying=ref(false);
       <div v-if="isfull" key="musicPlay" class="transition-container">
         <Music_Play class="fixed top-0 left-0 w-full" v-model:currenttime="currenttime" v-model:currentduration="currentduration"  @fullsize="changesize" :source="currentMusic.source"
           :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"
-          :sty="gradient[index]"></Music_Play>
+          :sty="gradient[index]" v-model:isPlaying="isPlaying"></Music_Play>
       </div>
     </transition>
 </template>
