@@ -58,30 +58,30 @@ const musicList = [
     singer: '张杰',
     cover: './天下.webp',
     source: './天下.mp3',
-    color1: '#101010',
-    color2: '#070707'
   },
   {
     name: '喜帖街',
     singer: '谢安琪',
     cover: './喜帖街.webp',
     source: './喜帖街.mp3',
-    color1: '#423e3d',
-    color2: '#595755'
   },
   {
     name: '少女的祈祷',
     singer: '杨千嬅',
     cover: './少女的祈祷.webp',
     source: './少女的祈祷.mp3',
-    color1: '#f1d3ab',
-    color2: '#c8c9a5'
   },
   {
     name: '泡沫',
     singer: '邓紫棋',
     cover: './泡沫.webp',
     source: './泡沫.mp3'
+  },
+  {
+    name: 'Something Just Like This',
+    singer: 'The Chainsmokers,Coldplay',
+    cover: './Something Just Like This.webp',
+    source: './Something Just Like This.mp3'
   }
 ]
 
