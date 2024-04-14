@@ -3,7 +3,7 @@
   <!-- <Test></Test> -->
 
   <!-- 音乐播放 -->
-  <audio :src="currentMusic.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls></audio>
+  <audio :src="currentMusic.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls autoplay></audio>
 
   <div v-if="!isfull">
     <MusicPlayer :key="1" :name="currentMusic.name" :singer="currentMusic.singer"

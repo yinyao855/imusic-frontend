@@ -7,7 +7,7 @@
       <div class="card">
         <label for="uploadx">
           <div class="card__img">
-            <img :src="props.cover" class="content stop rounded-full w-[243px] h-[243px]">
+            <img :src="props.cover" class="content rotate rounded-full w-[243px] h-[243px]">
           </div>
           <div class="card__title" style="font-weight: bolder !important;">{{ props.name }}</div>
           <div class="card__subtitle">{{ props.singer }}</div>
