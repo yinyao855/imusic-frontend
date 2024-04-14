@@ -139,8 +139,8 @@ const togglePlay = () => {
 
 const seek = () => {
   if (audioPlayer.value) {
-    audioPlayer.value.currentTime = currentTimeInSeconds.value;
-    console.log(currentTimeInSeconds.value);
+    audioPlayer.value.currentTime = currentduration.value;
+    console.log(currentduration.value);
   }
 };
 
