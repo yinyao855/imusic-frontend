@@ -188,7 +188,7 @@ function parseLRC(lrc) {
 
 const audioPlayer = ref(null);
 
-const isPlaying = ref(false);
+const isPlaying = ref(true);
 
 const begin = () => {
   isshow.value = true;
