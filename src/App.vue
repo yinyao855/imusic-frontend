@@ -161,7 +161,9 @@ const updateTime = () => {
   const minutes = Math.floor(audio.currentTime / 60);
   const seconds = Math.floor(audio.currentTime % 60);
   currentTime.value = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  duration.value = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  let minute=Math.floor(audio.duration / 60);
+  let second=Math.floor(audio.duration % 60);
+  duration.value = `${minute}:${second < 10 ? '0' : ''}${second}`;
   currentTimeInSeconds.value = audio.currentTime;
   durationInSeconds.value = audio.duration;
 };
