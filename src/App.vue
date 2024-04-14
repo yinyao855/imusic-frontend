@@ -185,22 +185,17 @@ function parseLRC(lrc) {
   });
   return lyrics;
 }
-
 const audioPlayer = ref(null);
-
 const isPlaying = ref(true);
-
 const begin = () => {
   isshow.value = true;
 };
-
 //当前播放时间和总时间
 const currentTime = ref("0:00");
 const duration = ref("0:00");
 //当前播放时间和总时间（秒）
 const durationInSeconds = ref(0);
 const currentTimeInSeconds = ref(0);
-
 const updateTime = () => {
   const audio = audioPlayer.value;
   const minutes = Math.floor(audio.currentTime / 60);
