@@ -177,7 +177,7 @@ const emit = defineEmits([
   'next'
 ]);
 //是否正在播放
-const isPlaying = ref(false);
+const isPlaying = defineModel("isPlaying");
 //当前播放时间和总时间
 const currentTime = defineModel("currenttime");
 const duration = ref('0:00');
@@ -245,6 +245,7 @@ const updateTime = () => {
 const seek = () => {
   if (audioPlayer.value) {
     audioPlayer.value.currentTime = currentTimeInSeconds.value;
+    console.log(currentTimeInSeconds.value);
   }
 };
 

@@ -10,6 +10,9 @@ const isfull = ref(false);
 
 function changesize(){
   isfull.value = !isfull.value;
+  console.log("当前时间"+currenttime.value);
+  console.log("当前秒数"+currentduration.value);
+  console.log("是否播放"+isPlaying.value);
 }
 
 //歌单
@@ -105,10 +108,12 @@ function backSong(){
 
 const currenttime=ref("0:00");
 const currentduration=ref(0);
+const isPlaying=ref(false);
 </script>
 
 <template>
   <Upload></Upload>
+  <Test></Test>
   <!-- <MusicPlayer v-if="!isfull" :source="currentMusic.source" :name="currentMusic.name" 
   :singer="currentMusic.singer" :cover="currentMusic.cover" 
   @fullsize="changesize" @back="backSong" @next="nextSong"></MusicPlayer>
@@ -119,11 +124,12 @@ const currentduration=ref(0);
       <div v-if="!isfull">
         <MusicPlayer :key="1" :source="currentMusic.source" :name="currentMusic.name" 
           :singer="currentMusic.singer" :cover="currentMusic.cover" 
-          @fullsize="changesize" @back="backSong" @next="nextSong" v-model:currenttime="currenttime" v-model:currentduration="currentduration"></MusicPlayer>
+          @fullsize="changesize" @back="backSong" @next="nextSong" v-model:currenttime="currenttime" 
+          v-model:currentduration="currentduration" v-model:isPlaying="isPlaying"></MusicPlayer>
       </div>
     
       <transition name="slide" appear>
-      <div v-show="isfull" key="musicPlay" class="transition-container">
+      <div v-if="isfull" key="musicPlay" class="transition-container">
         <Music_Play class="fixed top-0 left-0 w-full" v-model:currenttime="currenttime" v-model:currentduration="currentduration"  @fullsize="changesize" :source="currentMusic.source"
           :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" :lyrics="lyricsx"
           :sty="gradient[index]"></Music_Play>
