@@ -166,6 +166,7 @@ const next = () =>{
 }
 
 const restart = () => {
+  audioPlayer.value.currentTime=0;
   currentduration.value=0;
   currentTime.value='0:00';
 };
