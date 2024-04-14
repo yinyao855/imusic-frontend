@@ -14,7 +14,7 @@
           <div class="card__wrapper">
             <div class="card__time card__time-passed">{{ currenttime }}</div>
             <div class="card__timeline">
-              <input type="range" min="0" :max="durationInSeconds" v-model="currentduration" @input="handleChange">
+              <input type="range" min="0" :max="durationInSeconds" v-model="currentduration">
             </div>
             <div class="card__time card__time-left">{{ durationtime }}</div>
           </div>
@@ -174,20 +174,6 @@ function displayLyrics(lyrics, currentTime) {
     }
   }
 }
-
-const handleChange = () =>{
-//   console.log("hello");
-//   const second=Math.floor(currentduration.value%60);
-//  const minute=Math.floor(currentduration.value/60);
-//   currenttime.value= `${minute}:${second < 10 ? '0' : ''}${second}`
-}
-
-
-import { watch } from 'vue';
-
-// watch(currentduration, (newVal, oldVal) => {
-//   displayLyrics(lyrics, currentduration.value);
-// });
 
 </script>
 
