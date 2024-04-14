@@ -1,42 +1,80 @@
 <template>
   <Upload></Upload>
-  <!-- <Test></Test> -->
-
-  <!-- 音乐播放 -->
-  <audio :src="currentMusic.source" class="hidden" ref="audioPlayer" @timeupdate="updateTime" controls autoplay></audio>
-
-  <div v-if="!isfull">
-    <MusicPlayer :key="1" :name="currentMusic.name" :singer="currentMusic.singer"
-      :cover="currentMusic.cover" @fullsize="changesize" @back="backSong" @next="nextSong"
-      v-model:currentTime="currentTime" v-model:duration="duration" v-model:isPlaying="isPlaying"
-      v-model:durationInSeconds="durationInSeconds" v-model:currentTimeInSeconds="currentTimeInSeconds"
-      v-model:audioPlayer="audioPlayer" @togglePlay="togglePlay">
-    </MusicPlayer>
+  <div class="w-full flex">
+    <button @click="begin" class="btn btn-info mx-auto my-auto btn-outline">开始</button>
   </div>
 
-  <transition name="slide" appear>
-    <div v-if="isfull" key="musicPlay" class="transition-container">
-      <Music_Play class="fixed top-0 left-0 w-full" v-model:audioPlayer="audioPlayer" v-model:durationInSeconds="durationInSeconds" v-model:currentTime="currentTime" v-model:isPlaying="isPlaying" v-model:duration="duration"
-         v-model:currentTimeInSeconds="currentTimeInSeconds" @fullsize="changesize" 
-        :name="currentMusic.name" :singer="currentMusic.singer" :cover="currentMusic.cover" v-model:lyric="lyricsx" @update="updateTime"
-        :sty="gradient[index]" @togglePlay="togglePlay" @back="backSong" @next="nextSong"></Music_Play>
+  <!-- <Test></Test> -->
+  <div v-if="isPlaying">
+    <audio
+      :src="currentMusic.source"
+      class="hidden"
+      ref="audioPlayer"
+      @timeupdate="updateTime"
+      controls
+      autoplay
+    ></audio>
+
+    <div v-if="!isfull">
+      <MusicPlayer
+        :key="1"
+        :name="currentMusic.name"
+        :singer="currentMusic.singer"
+        :cover="currentMusic.cover"
+        @fullsize="changesize"
+        @back="backSong"
+        @next="nextSong"
+        v-model:currentTime="currentTime"
+        v-model:duration="duration"
+        v-model:isPlaying="isPlaying"
+        v-model:durationInSeconds="durationInSeconds"
+        v-model:currentTimeInSeconds="currentTimeInSeconds"
+        v-model:audioPlayer="audioPlayer"
+        @togglePlay="togglePlay"
+      >
+      </MusicPlayer>
     </div>
-  </transition>
+
+    <transition name="slide" appear>
+      <div v-if="isfull" key="musicPlay" class="transition-container">
+        <Music_Play
+          class="fixed top-0 left-0 w-full"
+          v-model:audioPlayer="audioPlayer"
+          v-model:durationInSeconds="durationInSeconds"
+          v-model:currentTime="currentTime"
+          v-model:isPlaying="isPlaying"
+          v-model:duration="duration"
+          v-model:currentTimeInSeconds="currentTimeInSeconds"
+          @fullsize="changesize"
+          :name="currentMusic.name"
+          :singer="currentMusic.singer"
+          :cover="currentMusic.cover"
+          v-model:lyric="lyricsx"
+          @update="updateTime"
+          :sty="gradient[index]"
+          @togglePlay="togglePlay"
+          @back="backSong"
+          @next="nextSong"
+        ></Music_Play>
+      </div>
+    </transition>
+  </div>
+  <!-- 音乐播放 -->
 </template>
 
 <script setup>
-import MusicPlayer from './components/MusicPlayer.vue';
-import Upload from './components/Upload.vue';
-import Test from './components/Test.vue';
-import Progress from './components/Progress.vue';
-import Music_Play from './components/Music_Play.vue';
-import { ref } from 'vue';
+import MusicPlayer from "./components/MusicPlayer.vue";
+import Upload from "./components/Upload.vue";
+import Test from "./components/Test.vue";
+import Progress from "./components/Progress.vue";
+import Music_Play from "./components/Music_Play.vue";
+import { ref } from "vue";
 //歌词
-import lyrics from './js/lyrics';
+import lyrics from "./js/lyrics";
 //背景
-import { gradient } from './js/lyrics';
+import { gradient } from "./js/lyrics";
 
-const isfull = ref(true);
+const isfull = ref(false);
 
 function changesize() {
   isfull.value = !isfull.value;
@@ -48,42 +86,42 @@ function changesize() {
 //歌单
 const musicList = [
   {
-    name: '难得有情人',
-    singer: '关淑怡',
-    cover: './难得有情人.png',
-    source: './难得有情人.mp3'
+    name: "难得有情人",
+    singer: "关淑怡",
+    cover: "./难得有情人.png",
+    source: "./难得有情人.mp3",
   },
   {
-    name: '天下',
-    singer: '张杰',
-    cover: './天下.webp',
-    source: './天下.mp3',
+    name: "天下",
+    singer: "张杰",
+    cover: "./天下.webp",
+    source: "./天下.mp3",
   },
   {
-    name: '喜帖街',
-    singer: '谢安琪',
-    cover: './喜帖街.webp',
-    source: './喜帖街.mp3',
+    name: "喜帖街",
+    singer: "谢安琪",
+    cover: "./喜帖街.webp",
+    source: "./喜帖街.mp3",
   },
   {
-    name: '少女的祈祷',
-    singer: '杨千嬅',
-    cover: './少女的祈祷.webp',
-    source: './少女的祈祷.mp3',
+    name: "少女的祈祷",
+    singer: "杨千嬅",
+    cover: "./少女的祈祷.webp",
+    source: "./少女的祈祷.mp3",
   },
   {
-    name: '泡沫',
-    singer: '邓紫棋',
-    cover: './泡沫.webp',
-    source: './泡沫.mp3'
+    name: "泡沫",
+    singer: "邓紫棋",
+    cover: "./泡沫.webp",
+    source: "./泡沫.mp3",
   },
   {
-    name: 'Something Just Like This',
-    singer: 'The Chainsmokers,Coldplay',
-    cover: './Something Just Like This.webp',
-    source: './Something Just Like This.mp3'
-  }
-]
+    name: "Something Just Like This",
+    singer: "The Chainsmokers,Coldplay",
+    cover: "./Something Just Like This.webp",
+    source: "./Something Just Like This.mp3",
+  },
+];
 
 let lrcContent = ref(lyrics[0]);
 
@@ -126,11 +164,11 @@ const togglePlay = () => {
 };
 
 function parseLRC(lrc) {
-  const lines = lrc.split('\n');
+  const lines = lrc.split("\n");
   const lyrics = [];
   const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\](.*)/;
 
-  lines.forEach(line => {
+  lines.forEach((line) => {
     const match = timeRegex.exec(line);
     if (match) {
       const minute = parseInt(match[1]);
@@ -144,14 +182,17 @@ function parseLRC(lrc) {
   return lyrics;
 }
 
-
 const audioPlayer = ref(null);
 
 const isPlaying = ref(false);
 
+const begin = () => {
+  isPlaying.value = true;
+};
+
 //当前播放时间和总时间
-const currentTime = ref('0:00');
-const duration = ref('0:00');
+const currentTime = ref("0:00");
+const duration = ref("0:00");
 //当前播放时间和总时间（秒）
 const durationInSeconds = ref(0);
 const currentTimeInSeconds = ref(0);
@@ -160,10 +201,10 @@ const updateTime = () => {
   const audio = audioPlayer.value;
   const minutes = Math.floor(audio.currentTime / 60);
   const seconds = Math.floor(audio.currentTime % 60);
-  currentTime.value = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  let minute=Math.floor(audio.duration / 60);
-  let second=Math.floor(audio.duration % 60);
-  duration.value = `${minute}:${second < 10 ? '0' : ''}${second}`;
+  currentTime.value = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  let minute = Math.floor(audio.duration / 60);
+  let second = Math.floor(audio.duration % 60);
+  duration.value = `${minute}:${second < 10 ? "0" : ""}${second}`;
   currentTimeInSeconds.value = audio.currentTime;
   durationInSeconds.value = audio.duration;
 };
