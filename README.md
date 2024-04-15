@@ -1,7 +1,15 @@
-# Vue 3 + Vite
+# Imusic-frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+这是一个简单的前端音乐播放器项目，为Imusic项目的一部分
 
-## Recommended IDE Setup
+## 启动方式
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+1. 首先将项目`git clone`下来
+
+2. 需要你提前装好 `node.js`
+
+3. 进入项目文件夹，执行 `npm install`
+
+4. 新建一个终端，执行 `npm run dev`
+
+
