@@ -159,7 +159,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps, watch, defineModel } from 'vue';
+import { defineProps, defineModel } from 'vue';
 
 const props = defineProps({
   cover: String,

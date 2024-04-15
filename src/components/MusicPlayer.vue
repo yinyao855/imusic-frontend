@@ -30,7 +30,7 @@
       </MusicPlayerView>
     </div>
 
-    <transition name="slide" appear>
+    <Transition name="slide" appear>
       <div v-if="isFull" key="musicPlay" class="transition-container">
         <MusicPlayFullView
           class="fixed top-0 left-0 w-full"
@@ -46,85 +46,61 @@
           :cover="currentMusic.cover"
           v-model:lyric="lyric"
           @update="updateTime"
-          :sty="gradient[index]"
+          :sty="gradient[curIndex]"
           @togglePlay="togglePlay"
           @back="backSong"
           @next="nextSong"
         ></MusicPlayFullView>
       </div>
-    </transition>
+    </Transition>
 
 </template>
 
 <script setup>
 import MusicPlayerView from "./MusicPlayerView.vue";
 import MusicPlayFullView from "./MusicPlayerFullView.vue";
-import { ref } from "vue";
-//歌词
-import lyrics from "../js/lyrics.js";
-//背景
-import { gradient } from "../js/lyrics.js";
+import {ref, watch} from "vue";
+
+const props = defineProps({
+  lyrics:Object,
+  gradient:Object,
+  musicList:Object,
+})
+
+const lyrics = props.lyrics
+const gradient = props.gradient
+const musicList = props.musicList
 
 const isFull = ref(false);
+
+const audioPlayer = ref(null);
+const isPlaying = ref(true);
+
+//当前播放时间和总时间
+const currentTime = ref("0:00");
+const duration = ref("0:00");
+//当前播放时间和总时间（秒）
+const durationInSeconds = ref(0);
+const currentTimeInSeconds = ref(0);
+
+//将当前播放歌曲和外部绑定
+const curIndex = defineModel("curIndex")
+const lyric = ref(parseLRC(lyrics[curIndex.value]))
+const currentMusic = ref(musicList[curIndex.value])
+
+const playerMode = ref(0)
 
 function changeSize() {
   isFull.value = !isFull.value;
 }
 
-//歌单
-const musicList = [
-  {
-    name: "难得有情人",
-    singer: "关淑怡",
-    cover: "./难得有情人.png",
-    source: "./难得有情人.mp3",
-  },
-  {
-    name: "天下",
-    singer: "张杰",
-    cover: "./天下.webp",
-    source: "./天下.mp3",
-  },
-  {
-    name: "喜帖街",
-    singer: "谢安琪",
-    cover: "./喜帖街.webp",
-    source: "./喜帖街.mp3",
-  },
-  {
-    name: "少女的祈祷",
-    singer: "杨千嬅",
-    cover: "./少女的祈祷.webp",
-    source: "./少女的祈祷.mp3",
-  },
-  {
-    name: "泡沫",
-    singer: "邓紫棋",
-    cover: "./泡沫.webp",
-    source: "./泡沫.mp3",
-  },
-  {
-    name: "Something Just Like This",
-    singer: "The Chain smokers,Coldplay",
-    cover: "./Something Just Like This.webp",
-    source: "./Something Just Like This.mp3",
-  },
-  {
-    name: "海阔天空",
-    singer: "Beyond",
-    cover: "./海阔天空.jpg",
-    source: "./海阔天空.mp3",
-  },
-];
-
-
-const lyric = ref(Array);
-lyric.value = parseLRC(lyrics[0]);
-
-const currentMusic = ref(musicList[0]);
-let index = 0;
-
-const playerMode = ref(0)
+//监控当前播放歌曲变化
+watch(curIndex, ()=>{
+  const index = curIndex.value;
+  currentMusic.value = musicList[index];
+  lyric.value = parseLRC(lyrics[index]);
+  isPlaying.value = true;
+})
 
 //播放设置
 function handleModeChange() {
@@ -143,19 +119,21 @@ function handleModeChange() {
 //上一首
 function backSong() {
   const length = musicList.length;
-  index = (index - 1 + length) % length;
-  currentMusic.value = musicList[index];
-  lyric.value = parseLRC(lyrics[index]);
-  isPlaying.value = true;
+  const index = (curIndex.value - 1 + length) % length;
+  // currentMusic.value = musicList[index];
+  // lyric.value = parseLRC(lyrics[index]);
+  // isPlaying.value = true;
+  curIndex.value = index;
 }
 
 //下一首
 function nextSong() {
   const length = musicList.length;
-  index = (index + 1) % length;
-  currentMusic.value = musicList[index];
-  lyric.value = parseLRC(lyrics[index]);
-  isPlaying.value = true;
+  const index = (curIndex.value + 1) % length;
+  // currentMusic.value = musicList[index];
+  // lyric.value = parseLRC(lyrics[index]);
+  // isPlaying.value = true;
+  curIndex.value = index;
 }
 
 function getRandomInt(max) {
@@ -165,10 +143,11 @@ function getRandomInt(max) {
 //随机选取
 function randomSong() {
   const length = musicList.length;
-  index = getRandomInt(length)
-  currentMusic.value = musicList[index];
-  lyric.value = parseLRC(lyrics[index]);
-  isPlaying.value = true;
+  const index = getRandomInt(length)
+  // currentMusic.value = musicList[index];
+  // lyric.value = parseLRC(lyrics[index]);
+  // isPlaying.value = true;
+  curIndex.value = index;
 }
 
 const togglePlay = () => {
@@ -199,15 +178,6 @@ function parseLRC(lrc) {
   return lyrics;
 }
 
-const audioPlayer = ref(null);
-const isPlaying = ref(true);
-
-//当前播放时间和总时间
-const currentTime = ref("0:00");
-const duration = ref("0:00");
-//当前播放时间和总时间（秒）
-const durationInSeconds = ref(0);
-const currentTimeInSeconds = ref(0);
 const updateTime = () => {
   const audio = audioPlayer.value;
   let minutes = Math.floor(audio.currentTime / 60);
