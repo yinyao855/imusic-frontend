@@ -1,301 +1,250 @@
 <template>
-  <!-- 缩小后的音乐播放器 -->
-  <Transition name="player-transition">
-    <div v-if="isMinimized" class="fixed bottom-6 left-6 w-32 h-32 rounded-full bg-red-100 animate-spin1"
-      @click="expandPlayer">
-      <img :src="props.cover" alt="Album Art" class="h-32 w-32 rounded-full">
+    <audio
+      :src="currentMusic.source"
+      class="hidden"
+      ref="audioPlayer"
+      @timeupdate="updateTime"
+      @ended="handleModeChange"
+      controls
+      autoplay
+    ></audio>
+
+    <div v-if="!isFull">
+      <MusicPlayerView
+        :key="1"
+        :name="currentMusic.name"
+        :singer="currentMusic.singer"
+        :cover="currentMusic.cover"
+        @fullsize="changeSize"
+        @back="backSong"
+        @next="nextSong"
+        v-model:currentTime="currentTime"
+        v-model:duration="duration"
+        v-model:isPlaying="isPlaying"
+        v-model:durationInSeconds="durationInSeconds"
+        v-model:currentTimeInSeconds="currentTimeInSeconds"
+        v-model:audioPlayer="audioPlayer"
+        v-model:playerMode="playerMode"
+        @togglePlay="togglePlay"
+      >
+      </MusicPlayerView>
     </div>
-  </Transition>
 
-  <Transition name="slide-fade">
-    <div class="fixed bottom-0 w-full h-36 bg-opacity-0" v-if="!isMinimized">
-      <div class="music-player-container h-28 mx-3 my-2 bg-slate-50 rounded-md shadow-lg flex bg-opacity-100">
-        <!-- 专辑封面 -->
-        <div class="rounded h-24 w-24 my-auto ml-4">
-          <img :src="props.cover" alt="Album Art" class="h-24 w-24 rounded">
-        </div>
-        <!-- 歌曲信息 -->
-        <div class="flex flex-col ml-4 my-auto">
-          <span class="text-lg font-semibold">{{ props.name }}</span>
-          <span class="text-sm font-light">{{ props.singer }}</span>
-        </div>
-        <!-- 播放控制 -->
-        <div class="flex flex-col ml-auto my-auto mr-4 w-1/2 h-4/5">
-          <div class="flex h-2/3 justify-around w-1/2 mx-auto">
-            <!--播放上一首-->
-            <div class="tooltip my-auto" data-tip="上一首">
-              <button class="btn glass btn-sm" @click="goback">
-                <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M34 36L22 24L34 12" stroke="#333" stroke-width="4" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                  <path d="M14 12V36" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-            </div>
-            <div class="tooltip my-auto" data-tip="播放与暂停">
-              <button class="btn glass" @click="togglePlay">
-                <svg v-if="!isPlaying" width="40" height="40" viewBox="0 0 48 48" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 24V11.8756L25.5 17.9378L36 24L25.5 30.0622L15 36.1244V24Z" fill="#333" stroke="#333"
-                    stroke-width="4" stroke-linejoin="round" />
-                </svg>
-                <svg v-else width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16 12V36" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M32 12V36" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-            </div>
-            <!--播放下一首-->
-            <div class="tooltip my-auto" data-tip="下一首">
-              <button class="btn glass btn-sm" @click="gonext">
-                <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14 12L26 24L14 36" stroke="#333" stroke-width="4" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                  <path d="M34 12V36" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          <!-- 进度条 -->
-          <div class="flex mt-2">
-            <input type="range" class="w-full ml-1 range range-accent range-xs" min="0" :max="durationInSeconds"
-              v-model="currentTimeInSeconds" @input="seek" />
-          </div>
-          <div class="flex justify-between mt-1">
-            <span class="text-xs font-light">{{ currentTime }}</span>
-            <span class="text-xs font-light text-right">{{ duration }}</span>
-          </div>
-        </div>
-        <!-- 其他控制 -->
-        <div class="w-1/4 flex justify-around">
-          <!--控制播放速度-->
-          <div class="tooltip my-auto" data-tip="播放速度">
-            <button class="btn glass btn-sm">
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M34.0234 6.68921C31.0764 4.97912 27.6525 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 20.3727 43.0344 16.9709 41.3461 14.0377"
-                  stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                  d="M31.9498 16.0503C31.9498 16.0503 28.5621 25.0948 27.0001 26.6569C25.438 28.219 22.9053 28.219 21.3432 26.6569C19.7811 25.0948 19.7811 22.5621 21.3432 21C22.9053 19.4379 31.9498 16.0503 31.9498 16.0503Z"
-                  fill="none" stroke="#333" stroke-width="4" stroke-linejoin="round" />
-              </svg>
-            </button>
-          </div>
-          <!--控制播放方式-->
-          <div class="tooltip my-auto" :data-tip="playerModeText">
-            <button class="btn glass btn-sm" @click="changeMode">
-              <svg v-if="playerMode === 0" width="24" height="24" viewBox="0 0 48 48" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M43.8233 25.2305C43.7019 25.9889 43.5195 26.727 43.2814 27.4395C42.763 28.9914 41.9801 30.4222 40.9863 31.6785C38.4222 34.9201 34.454 37 30 37H16C9.39697 37 4 31.6785 4 25C4 18.3502 9.39624 13 16 13H44"
-                  stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <svg v-if="playerMode === 1" width="24" height="24" viewBox="0 0 48 48" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M43.8233 25.2305C43.7019 25.9889 43.5195 26.727 43.2814 27.4395C42.763 28.9914 41.9801 30.4222 40.9863 31.6785C38.4222 34.9201 34.454 37 30 37H16C9.39697 37 4 31.6785 4 25C4 18.3502 9.39624 13 16 13H44"
-                  stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M24 19V31" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M24 19L21 22L19.5 23.5" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <svg v-if="playerMode === 2" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 25C4 18.3502 9.39624 13 16 13H44" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M38 7L44 13L38 19" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M44 23C44 29.6498 38.6038 35 32 35H4" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-                <path d="M10 41L4 35L10 29" stroke="#333" stroke-width="4" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </button>
-          </div>
-          <!--控制音量-->
-          <div class="my-auto flex">
-            <button class="btn glass my-auto btn-sm">
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 3.99976V43.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path d="M34 11.9998V35.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path d="M4 17.9998V29.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path d="M44 17.9998V29.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
-                <path d="M14 11.9998V35.9998" stroke="#333" stroke-width="4" stroke-linecap="round" />
-              </svg>
-            </button>
-            <input type="range" min="0" max="100" value="40" class="range range-xs my-auto" v-model="volume"
-              @input="changeVolume" />
-          </div>
-          <!--缩小播放器-->
-          <div class="tooltip my-auto" data-tip="最小化">
-            <button class="btn glass btn-sm" @click="minimizePlayer">
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M27 9V21H39" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M21 39V27H9" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M27 21L42 6" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M21 27L6 42" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
-          </div>
-          <!--全屏播放器-->
-          <div class="tooltip my-auto" data-tip="全屏显示">
-            <button class="btn glass btn-sm" @click="fullsize">
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 42H6V26" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M26 6H42V22" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
-          </div>
-
-        </div>
+    <transition name="slide" appear>
+      <div v-if="isFull" key="musicPlay" class="transition-container">
+        <MusicPlayFullView
+          class="fixed top-0 left-0 w-full"
+          v-model:audioPlayer="audioPlayer"
+          v-model:durationInSeconds="durationInSeconds"
+          v-model:currentTime="currentTime"
+          v-model:isPlaying="isPlaying"
+          v-model:duration="duration"
+          v-model:currentTimeInSeconds="currentTimeInSeconds"
+          @fullsize="changeSize"
+          :name="currentMusic.name"
+          :singer="currentMusic.singer"
+          :cover="currentMusic.cover"
+          v-model:lyric="lyric"
+          @update="updateTime"
+          :sty="gradient[index]"
+          @togglePlay="togglePlay"
+          @back="backSong"
+          @next="nextSong"
+        ></MusicPlayFullView>
       </div>
-    </div>
-  </Transition>
+    </transition>
 
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { defineProps, watch, defineModel } from 'vue';
+import MusicPlayerView from "./MusicPlayerView.vue";
+import MusicPlayFullView from "./MusicPlayerFullView.vue";
+import { ref } from "vue";
+//歌词
+import lyrics from "../js/lyrics.js";
+//背景
+import { gradient } from "../js/lyrics.js";
 
-const props = defineProps({
-  cover: String,
-  name: String,
-  singer: String,
-});
+const isFull = ref(false);
 
-const emit = defineEmits([
-  'fullsize',
-  'back',
-  'next',
-  'togglePlay',
-]);
-
-//是否正在播放
-const isPlaying = defineModel("isPlaying");
-//当前播放时间和总时间
-const currentTime = defineModel("currentTime");
-const duration = defineModel("duration");
-//当前播放时间和总时间（秒）
-const durationInSeconds = defineModel("durationInSeconds");
-const currentTimeInSeconds = defineModel("currentTimeInSeconds");
-//音频播放器对象
-const audioPlayer = defineModel("audioPlayer");
-//定义播放模式, 0为列表循环，1为单曲循环，2为随机播放
-const playerMode = ref(0);
-const playerModeText = ref('列表循环');
-const modeList = ['列表循环', '单曲循环', '随机播放'];
-//是否最小化
-const isMinimized = ref(false);
-//音量
-const volume = ref(40);
-
-//改变音量
-const changeVolume = () => {
-  audioPlayer.value.volume = volume.value / 100;
+function changeSize() {
+  isFull.value = !isFull.value;
 }
 
-//播放上一首
-const goback = () => {
-  emit('back');
-  console.log('back');
+//歌单
+const musicList = [
+  {
+    name: "难得有情人",
+    singer: "关淑怡",
+    cover: "./难得有情人.png",
+    source: "./难得有情人.mp3",
+  },
+  {
+    name: "天下",
+    singer: "张杰",
+    cover: "./天下.webp",
+    source: "./天下.mp3",
+  },
+  {
+    name: "喜帖街",
+    singer: "谢安琪",
+    cover: "./喜帖街.webp",
+    source: "./喜帖街.mp3",
+  },
+  {
+    name: "少女的祈祷",
+    singer: "杨千嬅",
+    cover: "./少女的祈祷.webp",
+    source: "./少女的祈祷.mp3",
+  },
+  {
+    name: "泡沫",
+    singer: "邓紫棋",
+    cover: "./泡沫.webp",
+    source: "./泡沫.mp3",
+  },
+  {
+    name: "Something Just Like This",
+    singer: "The Chain smokers,Coldplay",
+    cover: "./Something Just Like This.webp",
+    source: "./Something Just Like This.mp3",
+  },
+  {
+    name: "海阔天空",
+    singer: "Beyond",
+    cover: "./海阔天空.jpg",
+    source: "./海阔天空.mp3",
+  },
+];
+
+
+const lyric = ref(Array);
+lyric.value = parseLRC(lyrics[0]);
+
+const currentMusic = ref(musicList[0]);
+let index = 0;
+
+const playerMode = ref(0)
+
+//播放设置
+function handleModeChange() {
+  if (playerMode.value === 0){
+    nextSong();
+  }
+  else if (playerMode.value === 1){
+    audioPlayer.value.currentTime = 0;
+    audioPlayer.value.play();
+  }
+  else {
+    randomSong();
+  }
 }
 
-//播放下一首
-const gonext = () => {
-  emit('next');
-  console.log('next');
+//上一首
+function backSong() {
+  const length = musicList.length;
+  index = (index - 1 + length) % length;
+  currentMusic.value = musicList[index];
+  lyric.value = parseLRC(lyrics[index]);
+  isPlaying.value = true;
 }
 
-//改变播放模式
-const changeMode = () => {
-  playerMode.value = (playerMode.value + 1) % 3;
-  playerModeText.value = modeList[playerMode.value];
-  console.log(playerMode.value);
+//下一首
+function nextSong() {
+  const length = musicList.length;
+  index = (index + 1) % length;
+  currentMusic.value = musicList[index];
+  lyric.value = parseLRC(lyrics[index]);
+  isPlaying.value = true;
 }
 
-console.log(props.source);
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+//随机选取
+function randomSong() {
+  const length = musicList.length;
+  index = getRandomInt(length)
+  currentMusic.value = musicList[index];
+  lyric.value = parseLRC(lyrics[index]);
+  isPlaying.value = true;
+}
 
 const togglePlay = () => {
-  emit('togglePlay');
-};
-
-const seek = () => {
-  if (audioPlayer.value) {
-    audioPlayer.value.currentTime = currentTimeInSeconds.value;
-    console.log(currentTimeInSeconds.value);
+  if (isPlaying.value) {
+    audioPlayer.value.pause();
+  } else {
+    audioPlayer.value.play();
   }
+  isPlaying.value = !isPlaying.value;
 };
 
-function minimizePlayer() {
-  isMinimized.value = true;
+function parseLRC(lrc) {
+  const lines = lrc.split("\n");
+  const lyrics = [];
+  const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})](.*)/;
+
+  lines.forEach((line) => {
+    const match = timeRegex.exec(line);
+    if (match) {
+      const minute = parseInt(match[1]);
+      const second = parseInt(match[2]);
+      const millisecond = parseInt(match[3]);
+      const timestamp = minute * 60 + second + millisecond / 1000;
+      const text = match[4].trim();
+      lyrics.push({ timestamp, text });
+    }
+  });
+  return lyrics;
 }
 
-function expandPlayer() {
-  isMinimized.value = false;
-}
+const audioPlayer = ref(null);
+const isPlaying = ref(true);
 
-//全屏显示
-function fullsize() {
-  emit('fullsize');
-}
+//当前播放时间和总时间
+const currentTime = ref("0:00");
+const duration = ref("0:00");
+//当前播放时间和总时间（秒）
+const durationInSeconds = ref(0);
+const currentTimeInSeconds = ref(0);
+const updateTime = () => {
+  const audio = audioPlayer.value;
+  let minutes = Math.floor(audio.currentTime / 60);
+  let seconds = Math.floor(audio.currentTime % 60);
+  currentTime.value = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  minutes = Math.floor(audio.duration / 60);
+  seconds = Math.floor(audio.duration % 60);
+  duration.value = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  currentTimeInSeconds.value = audio.currentTime;
+  durationInSeconds.value = audio.duration;
+};
 </script>
 
-<style scoped>
-.music-player-container {
-  /* 设置背景图片填充方式 */
-  background-size: cover;
-  /* 设置背景图片的位置 */
-  background-position: center;
-  /* 使用 backdrop-filter 实现背景模糊效果，同时保持内部内容清晰 */
-  backdrop-filter: blur(30px);
-  /* 设置背景图片透明度 */
+<style>
+.slide-leave-active {
+  transition: transform 0.5s ease;
 }
 
-/* 最小化播放器的过渡效果 */
-.player-transition-enter-active,
-.player-transition-leave-active {
-  transition: all 0.8s ease-in-out;
+.slide-enter-active {
+  transition: transform 0.5s ease;
 }
 
-.player-transition-enter-from,
-.player-transition-leave-to {
-  opacity: 0;
-  transform: scale(0);
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
 }
 
-/* 默认播放器的过渡效果 */
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+.slide-enter-to,
+.slide-leave-from {
+  transform: translateX(0);
 }
 
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateY(50px);
-  opacity: 0;
-}
-
-/* 旋转动画 */
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin1 {
-  animation: spin 4s linear infinite;
-}
-
-.animate-spin1:hover {
-  animation-play-state: paused;
-  /* transform: scale(1.1);
-    transition-duration: 0.5s; */
+.transition-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

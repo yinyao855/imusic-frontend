@@ -179,8 +179,6 @@ const getcurrentTime = () => {
 
 
 function displayLyrics(lyrics, currentTime) {
-  console.log(currentTime)
-  console.log(lyrics)
   for (let i = 0; i < lyrics.length; i++) {
     if (currentTime >= lyrics[i].timestamp && (!lyrics[i + 1] || currentTime < lyrics[i + 1].timestamp)) {
       text.value = lyrics[i].text;
@@ -214,8 +212,7 @@ function displayLyrics(lyrics, currentTime) {
   }
 }
 
-watch(currentduration, (newValue) => {
-  console.log("hello");
+watch(currentduration, () => {
   displayLyrics(lyric.value, currentduration.value);
 });
 </script>
