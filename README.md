@@ -12,4 +12,8 @@
 
 4. 新建一个终端，执行 `npm run dev`
 
+## 实现简单部署
+
+部署到github pages上
+
 
